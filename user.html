@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">
+        <i class="fas fa-user"></i>
+        Trang Người Dùng
+      </h1>
+      <button id="logoutBtn" class="logout-button">
+        Đăng xuất
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+      <a href="report.html" class="nav-button">
+        <i class="fas fa-chart-bar"></i>
+        Xem báo cáo
+      </a>
+    </div>
+
+    <div id="voteSection" class="login-card" style="display:none;">
+      <div class="login-header">
+        <i class="fas fa-vote-yea"></i>
+        <h2 id="titleVote">Bình chọn ngày đi làm tuần này</h2>
+        <p id="allowedDaysInfo" class="info-text" style="color: #666; margin: 10px 0;">
+          (Chỉ được chọn những ngày cho phép theo quy định)
+        </p>
+      </div>
+
+      <form id="voteForm" class="login-form">
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" name="days" value="mon" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            Thứ 2
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" name="days" value="tue" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            Thứ 3
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" name="days" value="wed" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            Thứ 4
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" name="days" value="thu" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            Thứ 5
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" name="days" value="fri" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            Thứ 6
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" name="days" value="sat" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            Thứ 7
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" name="days" value="sun" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            Chủ Nhật
+          </label>
+        </div>
+
+        <button type="submit" class="login-button">
+          <span>Gửi bình chọn</span>
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+      <div id="voteStatus" class="status-message"></div>
+      <div id="confirmStatus" class="status-message" style="margin-top: 10px;"></div>
+    </div>
+
+    <div class="login-card" style="margin-top: 2rem;">
+      <div class="login-header">
+        <i class="fas fa-calendar-check"></i>
+        <h2>Lịch bình chọn và chấm công của bạn</h2>
+      </div>
+
+      <p id="weekStartDate" class="week-date"></p>
+
+      <div class="table-responsive">
+        <table id="myVoteTable">
+          <thead>
+            <tr>
+              <th>Thứ 2</th>
+              <th>Thứ 3</th>
+              <th>Thứ 4</th>
+              <th>Thứ 5</th>
+              <th>Thứ 6</th>
+              <th>Thứ 7</th>
+              <th>Chủ Nhật</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="mon" class="vote-cell">–</td>
+              <td id="tue" class="vote-cell">–</td>
+              <td id="wed" class="vote-cell">–</td>
+              <td id="thu" class="vote-cell">–</td>
+              <td id="fri" class="vote-cell">–</td>
+              <td id="sat" class="vote-cell">–</td>
+              <td id="sun" class="vote-cell">–</td>
+            </tr>
+            <tr>
+              <td id="monAttendance" class="attendance-cell">–</td>
+              <td id="tueAttendance" class="attendance-cell">–</td>
+              <td id="wedAttendance" class="attendance-cell">–</td>
+              <td id="thuAttendance" class="attendance-cell">–</td>
+              <td id="friAttendance" class="attendance-cell">–</td>
+              <td id="satAttendance" class="attendance-cell">–</td>
+              <td id="sunAttendance" class="attendance-cell">–</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import modules -->
+  <script type="module" src="./firebase-config.js"></script>
+  <script type="module" src="./user.js"></script>
+</body>
+</html>

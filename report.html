@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo điểm danh</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="report.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" id="backBtn" class="nav-button">
+                <i class="fas fa-arrow-left"></i>
+                Quay lại
+            </a>
+            <button id="logoutBtn" class="logout-button">
+                <i class="fas fa-sign-out-alt"></i>
+                Đăng xuất
+            </button>
+        </div>
+    </nav>
+
+    <div class="report-container">
+        <div class="report-header">
+            <h1>
+                <i class="fas fa-chart-bar"></i>
+                Báo cáo điểm danh
+            </h1>
+        </div>
+
+        <div id="userInfo"></div>
+
+        <div class="filter-card">
+            <div class="filter-section">
+                <!-- Phần filter cho admin -->
+                <div id="adminFilters" class="select-group" style="display: none;">
+                    <label for="userSelect">Người dùng</label>
+                    <select id="userSelect" class="user-select">
+                        <option value="">Chọn người dùng</option>
+                    </select>
+                </div>
+
+                <!-- Filter chung -->
+                <div class="select-group">
+                    <label for="monthSelect">Tháng</label>
+                    <select id="monthSelect" class="date-select">
+                        <option value="">Chọn tháng</option>
+                    </select>
+                </div>
+
+                <div class="select-group">
+                    <label for="yearSelect">Năm</label>
+                    <select id="yearSelect" class="date-select">
+                        <option value="">Chọn năm</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-table-container">
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Tuần</th>
+                        <th>Thứ 2</th>
+                        <th>Thứ 3</th>
+                        <th>Thứ 4</th>
+                        <th>Thứ 5</th>
+                        <th>Thứ 6</th>
+                        <th>Thứ 7</th>
+                        <th>Chủ nhật</th>
+                    </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="report.js"></script>
+</body>
+</html>

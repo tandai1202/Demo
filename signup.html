@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng ký</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="login-card">
+      <div class="login-header">
+        <i class="fas fa-user-plus"></i>
+        <h1>Đăng Ký Tài Khoản</h1>
+      </div>
+
+      <form id="signup-form" class="login-form">
+        <div class="form-group">
+          <label for="email">
+            <i class="fas fa-envelope"></i>
+            Email
+          </label>
+          <input type="email" id="email" required placeholder="Nhập email của bạn"/>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">
+            <i class="fas fa-lock"></i>
+            Mật khẩu
+          </label>
+          <input type="password" id="password" required placeholder="Nhập mật khẩu"/>
+        </div>
+
+        <button type="submit" class="login-button">
+          <span>Đăng ký</span>
+          <i class="fas fa-user-plus"></i>
+        </button>
+      </form>
+
+      <p class="signup-link">
+        Đã có tài khoản? 
+        <a href="index.html">Đăng nhập tại đây</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Import modules -->
+  <script type="module" src="./firebase-config.js"></script>
+  <script type="module">
+    import { handleSignup } from './auth.js';
+
+    const signupForm = document.getElementById('signup-form');
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const result = await handleSignup(email, password);
+
+      if (result.success) {
+        showMessage("Đăng ký thành công! Vui lòng đăng nhập.", "success");
+        // Chuyển về trang login sau 2 giây
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2000);
+      } else {
+        showMessage("Có lỗi khi đăng ký: " + result.error, "error");
+      }
+    });
+
+    // Hiển thị thông báo với animation
+    function showMessage(message, type) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+      messageDiv.textContent = message;
+      document.querySelector('.login-card').appendChild(messageDiv);
+      
+      // Tự động ẩn sau 3 giây
+      setTimeout(() => {
+        messageDiv.remove();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

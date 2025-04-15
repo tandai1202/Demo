@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">
+        <i class="fas fa-user-shield"></i>
+        Trang Quản Trị
+      </h1>
+      <a href="report.html" class="nav-button">
+        <i class="fas fa-chart-bar"></i>
+        Xem báo cáo tổng hợp
+      </a>
+      <button id="logoutBtn" class="logout-button">
+        Đăng xuất
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+
+    <div class="login-card">
+      <div class="login-header">
+        <i class="fas fa-user-plus"></i>
+        <h2>Tạo tài khoản người dùng</h2>
+      </div>
+
+      <form id="create-user-form" class="login-form">
+        <div class="form-group">
+          <label for="newUserEmail">
+            <i class="fas fa-envelope"></i>
+            Email
+          </label>
+          <input type="email" id="newUserEmail" required placeholder="Nhập email người dùng mới"/>
+        </div>
+        
+        <div class="form-group">
+          <label for="newUserPassword">
+            <i class="fas fa-lock"></i>
+            Mật khẩu
+          </label>
+          <input type="password" id="newUserPassword" required placeholder="Nhập mật khẩu"/>
+        </div>
+
+        <button type="submit" class="login-button">
+          <span>Tạo tài khoản</span>
+          <i class="fas fa-plus-circle"></i>
+        </button>
+      </form>
+    </div>
+
+    <div class="login-card" style="margin-top: 2rem;">
+      <div class="login-header">
+        <i class="fas fa-table"></i>
+        <h2>Danh sách đăng ký + chấm công</h2>
+        <div class="date-filter">
+          <div class="filter-group">
+            <label for="weekSelect">
+              <i class="fas fa-calendar-week"></i>
+              Tuần
+            </label>
+            <select id="weekSelect" class="date-select"></select>
+          </div>
+          <div class="filter-group">
+            <label for="yearSelect">
+              <i class="fas fa-calendar-alt"></i>
+              Năm
+            </label>
+            <select id="yearSelect" class="date-select"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table id="allInOneTable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Thứ 2</th>
+              <th>Thứ 3</th>
+              <th>Thứ 4</th>
+              <th>Thứ 5</th>
+              <th>Thứ 6</th>
+              <th>Thứ 7</th>
+              <th>Chủ Nhật</th>
+              <th>Tổng</th>
+              <th>Báo cáo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Sẽ được build bởi admin.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="action-buttons">
+        <button id="saveChangesBtn" class="save-button">
+          <i class="fas fa-save"></i>
+          Lưu thay đổi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import modules -->
+  <script type="module" src="./firebase-config.js"></script>
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>
