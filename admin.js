@@ -22,12 +22,30 @@ const dayList = ['mon','tue','wed','thu','fri','sat','sun'];
 // Object lưu trữ thay đổi tạm thời
 let tempChanges = {};
 
-// Khởi tạo select tuần và năm
+// Hàm tính ngày bắt đầu và kết thúc của tuần theo ISO (Thứ 2 - Chủ Nhật)
+function getDateRangeOfWeek(week, year) {
+  // Tính ngày đầu tiên của năm
+  const simple = new Date(year, 0, 1 + (week - 1) * 7);
+  const dayOfWeek = simple.getDay(); // 0 (Chủ Nhật) đến 6 (Thứ Bảy)
+  const ISOweekStart = new Date(simple);
+  // Điều chỉnh để lấy Thứ 2 của tuần theo chuẩn ISO 8601:
+  if (dayOfWeek <= 4) { 
+    ISOweekStart.setDate(simple.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+  } else {
+    ISOweekStart.setDate(simple.getDate() + (8 - dayOfWeek));
+  }
+  const ISOweekEnd = new Date(ISOweekStart);
+  ISOweekEnd.setDate(ISOweekStart.getDate() + 6);
+  return {
+    start: ISOweekStart,
+    end: ISOweekEnd
+  };
+}
+
 function initializeDateSelectors() {
   const weekSelect = document.getElementById('weekSelect');
   const yearSelect = document.getElementById('yearSelect');
   
-  // Tạo options cho năm (từ 2024 đến năm hiện tại + 1)
   const currentYear = new Date().getFullYear();
   for (let year = 2024; year <= currentYear + 1; year++) {
     const option = document.createElement('option');
@@ -41,20 +59,67 @@ function initializeDateSelectors() {
   for (let week = 1; week <= 53; week++) {
     const option = document.createElement('option');
     option.value = week;
-    option.textContent = `Tuần ${week}`;
+    
+    const { start, end } = getDateRangeOfWeek(week, currentYear);
+    // Sử dụng định dạng ngày theo locale Việt Nam (dd/mm/yyyy)
+    const startStr = start.toLocaleDateString('vi-VN');
+    const endStr = end.toLocaleDateString('vi-VN');
+    option.textContent = `Tuần ${week} (${startStr} - ${endStr})`;
+    
     weekSelect.appendChild(option);
   }
+  // Thiết lập tuần hiện tại theo thuật toán hiện có (có thể giữ hàm getWeekNumber như đang có)
   const currentWeek = getWeekNumber(new Date());
   weekSelect.value = currentWeek;
 
-  // Thêm event listeners
   weekSelect.addEventListener('change', () => {
     listenRealTimeVotes();
+    updateTableHeaders();
   });
   yearSelect.addEventListener('change', () => {
+    // Khi năm thay đổi, cần cập nhật lại options của tuần theo năm được chọn:
+    refreshWeekOptions();
     listenRealTimeVotes();
+    updateTableHeaders();
   });
 }
+
+// Hàm cập nhật lại options của tuần khi năm thay đổi
+function refreshWeekOptions() {
+  const weekSelect = document.getElementById('weekSelect');
+  weekSelect.innerHTML = ''; // Xóa toàn bộ options cũ
+  const currentYear = parseInt(document.getElementById('yearSelect').value);
+  for (let week = 1; week <= 53; week++) {
+    const option = document.createElement('option');
+    option.value = week;
+    const { start, end } = getDateRangeOfWeek(week, currentYear);
+    const startStr = start.toLocaleDateString('vi-VN');
+    const endStr = end.toLocaleDateString('vi-VN');
+    option.textContent = `Tuần ${week} (${startStr} - ${endStr})`;
+    weekSelect.appendChild(option);
+  }
+  // Nếu cần, có thể cập nhật lại tuần hiện tại
+  const currentWeek = getWeekNumber(new Date());
+  weekSelect.value = currentWeek;
+}
+
+function updateTableHeaders() {
+  const year = parseInt(document.getElementById('yearSelect').value);
+  const week = parseInt(document.getElementById('weekSelect').value);
+  const { start } = getDateRangeOfWeek(week, year);
+  // Các header trong bảng: cột đầu tiên (User) giữ nguyên, 7 cột ngày trong tuần, sau đó là “Tổng” và “Báo cáo”
+  const headerCells = document.querySelectorAll('#allInOneTable thead th');
+  const daysOfWeek = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"];
+  
+  daysOfWeek.forEach((dayText, index) => {
+    const tempDate = new Date(start);
+    tempDate.setDate(tempDate.getDate() + index);
+    const formattedDate = tempDate.toLocaleDateString('vi-VN'); // định dạng dd/mm/yyyy
+    // Vì headerCells[0] là "User", bắt đầu từ index 1 cho ngày
+    headerCells[index+1].textContent = `${dayText} (${formattedDate})`;
+  });
+}
+
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
