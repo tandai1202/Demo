@@ -142,25 +142,25 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // Tạo tài khoản người dùng mới
-const createUserForm = document.getElementById('create-user-form');
-createUserForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('newUserEmail').value;
-  const password = document.getElementById('newUserPassword').value;
+// const createUserForm = document.getElementById('create-user-form');
+// createUserForm.addEventListener('submit', async (e) => {
+//   e.preventDefault();
+//   const email = document.getElementById('newUserEmail').value;
+//   const password = document.getElementById('newUserPassword').value;
 
-  try {
-    const result = await createUserByAdmin(email, password);
-    if (result.success) {
-      alert("Tạo tài khoản thành công!");
-      createUserForm.reset();
-      listenRealTimeVotes();
-    } else {
-      alert("Lỗi tạo tài khoản: " + result.error);
-    }
-  } catch (error) {
-    alert("Lỗi tạo tài khoản: " + error.message);
-  }
-});
+//   try {
+//     const result = await createUserByAdmin(email, password);
+//     if (result.success) {
+//       alert("Tạo tài khoản thành công!");
+//       createUserForm.reset();
+//       listenRealTimeVotes();
+//     } else {
+//       alert("Lỗi tạo tài khoản: " + result.error);
+//     }
+//   } catch (error) {
+//     alert("Lỗi tạo tài khoản: " + error.message);
+//   }
+// });
 
 // Lắng nghe real-time
 function listenRealTimeVotes() {
