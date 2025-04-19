@@ -72,6 +72,11 @@
     padding: 20px;
 }
 
+.user-header{
+    font-weight:700;
+    background:#f7f7f7;
+}
+
 .report-header {
     background: linear-gradient(135deg, #1976D2, #64B5F6);
     color: white;

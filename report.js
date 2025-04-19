@@ -17,6 +17,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // Mapping các ngày trong tuần
+const weekdayKeys = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 const weekDayMapping = {
     'mon': 'Thứ 2',
     'tue': 'Thứ 3',
@@ -31,6 +32,8 @@ const weekDayMapping = {
 let currentUserRole = '';
 let selectedUserId = '';
 let selectedUserEmail = '';
+var usersList = []; 
+
 
 // Kiểm tra quyền truy cập và khởi tạo giao diện
 onAuthStateChanged(auth, async (user) => {
@@ -50,20 +53,15 @@ onAuthStateChanged(auth, async (user) => {
     currentUserRole = userData.role;
 
     // Xử lý giao diện theo role
-    if (userData.role === 'admin') {
-        document.getElementById('adminFilters').style.display = 'block';
+    if (currentUserRole === "admin") {
         await loadUsersList();
-        document.getElementById('backBtn').href = 'admin.html';
-    } else if (userData.role === 'user') {
-        selectedUserId = user.uid;
-        selectedUserEmail = userData.email;
-        document.getElementById('userInfo').textContent = `Người dùng: ${userData.email}`;
-        document.getElementById('backBtn').href = 'user.html';
+        document.getElementById("backBtn").href = "admin.html";
     } else {
-        alert("Role không hợp lệ!");
-        window.location.href = 'index.html';
-        return;
+        usersList = [{ id: user.uid, email: userData.email }];
+        document.getElementById("backBtn").href = "user.html";
     }
+
+    console.log(currentUserRole)
 
     // Khởi tạo các selector
     initializeDateSelectors();
@@ -84,26 +82,31 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// Khởi tạo danh sách user cho admin
 async function loadUsersList() {
-    const userSelect = document.getElementById('userSelect');
-    const usersRef = collection(db, 'users');
-    const q = query(usersRef, where('role', '==', 'user'));
-    const querySnapshot = await getDocs(q);
-    
-    querySnapshot.forEach((doc) => {
-        const option = document.createElement('option');
-        option.value = doc.id;
-        option.textContent = doc.data().email;
-        userSelect.appendChild(option);
-    });
-
-    userSelect.addEventListener('change', (e) => {
-        selectedUserId = e.target.value;
-        selectedUserEmail = e.target.selectedOptions[0].textContent;
-        loadReportData();
-    });
+    const snap = await getDocs(query(collection(db, "users"), where("role", "==", "user")));
+    usersList = snap.docs.map((d) => ({ id: d.id, email: d.data().email }));
 }
+
+// Khởi tạo danh sách user cho admin
+// async function loadUsersList() {
+//     const userSelect = document.getElementById('userSelect');
+//     const usersRef = collection(db, 'users');
+//     const q = query(usersRef, where('role', '==', 'user'));
+//     const querySnapshot = await getDocs(q);
+    
+//     querySnapshot.forEach((doc) => {
+//         const option = document.createElement('option');
+//         option.value = doc.id;
+//         option.textContent = doc.data().email;
+//         userSelect.appendChild(option);
+//     });
+
+//     userSelect.addEventListener('change', (e) => {
+//         selectedUserId = e.target.value;
+//         selectedUserEmail = e.target.selectedOptions[0].textContent;
+//         loadReportData();
+//     });
+// }
 
 // Khởi tạo các selector ngày tháng
 function initializeDateSelectors() {
@@ -166,51 +169,94 @@ function getWeeksInMonth(month, year) {
     return Array.from(weeks).sort((a, b) => a - b);
 }
 
+function getDaysInMonth(month, year) {
+    const out = [];
+    const d = new Date(year, month - 1, 1);
+    while (d.getMonth() === month - 1) {
+        out.push(new Date(d));
+        d.setDate(d.getDate() + 1);
+    }
+    return out;
+}
+
 // Load và hiển thị dữ liệu báo cáo
 async function loadReportData() {
-    if (!selectedUserId) return;
+    const month = +document.getElementById("monthSelect").value;
+    const year = +document.getElementById("yearSelect").value;
+    const days = getDaysInMonth(month, year);
 
-    const month = parseInt(document.getElementById('monthSelect').value);
-    const year = parseInt(document.getElementById('yearSelect').value);
-    const weeks = getWeeksInMonth(month, year);
-    document.getElementById('userInfo').textContent = `Người dùng: ${selectedUserEmail}`;
+    // ----- Build header (1…n) -----
+    const headRow = document.querySelector(".report-table thead tr");
+    headRow.innerHTML = "<th>Người dùng</th>";
+    days.forEach((d) => {
+        headRow.innerHTML += `<th>${d.getDate()}</th>`;
+    });
 
-    const tableBody = document.getElementById('reportTableBody');
-    tableBody.innerHTML = '';
+    // ----- Body -----
+    const tbody = document.getElementById("reportTableBody");
+    tbody.innerHTML = "";
 
-    for (const weekNum of weeks) {
-        const weekId = getWeekId(year, weekNum);
-        const voteDoc = await getDoc(doc(db, 'weeks', weekId, 'votes', selectedUserId));
-        
-        if (voteDoc.exists()) {
-            const data = voteDoc.data();
-            const row = document.createElement('tr');
-            
-            // Cột tuần
-            const weekCell = document.createElement('td');
-            weekCell.textContent = `Tuần ${weekNum}`;
-            row.appendChild(weekCell);
+    
+    // Lấy danh sách người dùng
+    // const usersRef = collection(db, 'users');
+    // const q = query(usersRef, where('role', '==', 'user'));
+    // const querySnapshot = await getDocs(q);
+    // const userListAdmin = [];
+    // querySnapshot.forEach((docSnap) => {
+    //     let userData = docSnap.data();
+    //     userData.id = docSnap.id;
+    //     userListAdmin.push(userData);
+    // });
+    
+    // const targets = currentUserRole === "admin" ? userListAdmin : usersList; // giữ rõ ràng
+    // console.log(targets)
+    // console.log(userList)
 
-            // Các cột ngày trong tuần
-            ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].forEach(day => {
-                const cell = document.createElement('td');
-                if (data.days[day]) {
-                    if (data.confirmed[day]) {
-                        cell.innerHTML = data.attendance[day] ? 
-                            '<span class="confirmed">✔</span>' : 
-                            '<span class="unconfirmed">✘</span>';
-                    } else {
-                        cell.innerHTML = '<span class="unconfirmed">⋯</span>';
-                    }
-                    cell.title = `${weekDayMapping[day]} - ${data.confirmed[day] ? 'Đã xác nhận' : 'Chưa xác nhận'}`;
-                } else {
-                    cell.textContent = '–';
-                }
-                row.appendChild(cell);
-            });
+    if (!usersList.length && currentUserRole === "admin") await loadUsersList();
 
-            tableBody.appendChild(row);
+    // Vẫn rỗng => hiển thị thông báo
+    if (!usersList.length) {
+        document.getElementById("reportTableBody").innerHTML =
+            `<tr><td colspan="${days.length + 1}">Không tìm thấy người dùng</td></tr>`;
+        return;
+    }
+
+    for (const user of usersList) {
+        // Pre‑fetch tuần liên quan
+        const weeksCache = {};
+        const weeksNeeded = new Set(days.map((d) => getWeekNumber(d)));
+        for (const wk of weeksNeeded) {
+            const id = getWeekId(year, wk);
+            const snap = await getDoc(doc(db, "weeks", id, "votes", user.id));
+            weeksCache[id] = snap.exists() ? snap.data() : null;
         }
+
+        const row = document.createElement("tr");
+        const nameTd = document.createElement("td");
+        nameTd.textContent = user.email;
+        row.appendChild(nameTd);
+
+        days.forEach((date) => {
+            const td = document.createElement("td");
+            const weekId = getWeekId(year, getWeekNumber(date));
+            const data = weeksCache[weekId];
+            const key = weekdayKeys[date.getDay()];
+            if (data && data.days[key]) {
+                if (data.confirmed[key]) {
+                    td.innerHTML = data.attendance[key]
+                        ? "<span class='confirmed'>✔</span>"
+                        : "<span class='unconfirmed'>✘</span>";
+                } else {
+                    td.innerHTML = "<span class='unconfirmed'>⋯</span>";
+                }
+                td.title = `${weekDayMapping[key]} - ${data.confirmed[key] ? "Đã xác nhận" : "Chưa xác nhận"}`;
+            } else {
+                td.textContent = "–";
+            }
+            row.appendChild(td);
+        });
+
+        tbody.appendChild(row);
     }
 }
 
