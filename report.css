@@ -1,216 +1,310 @@
+/* General styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-image: url('https://via.placeholder.com/1920x1080?text=Quan+Doi+Nhan+Dan');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Banner kỷ niệm 30/4 */
+.anniversary-banner {
+    background-color: #d10000;
+    color: #ffd700;
+    padding: 10px 0;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.flag-icon, .badge-icon {
+    width: 30px;
+    height: 30px;
+}
+
+/* Navbar */
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 1000;
-    padding: 12px 24px;
+    background-color: #2a5c45;
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .nav-content {
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.nav-button {
-    text-decoration: none;
-    color: #1976D2;
-    display: inline-flex;
+.military-title {
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffd700;
+    display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    gap: 10px;
 }
 
-.navbar .logout-button {
-    background-color: #f44336;
+.nav-button, .logout-button {
+    background-color: #1e4a36;
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 8px 15px;
     border-radius: 4px;
     cursor: pointer;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 8px;
-    transition: background-color 0.3s;
+    gap: 5px;
+    transition: all 0.3s;
 }
 
-.navbar .logout-button:hover {
-    background-color: #d32f2f;
+.nav-button:hover, .logout-button:hover {
+    background-color: #133728;
+    transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
-    .navbar {
-        padding: 8px 16px;
-    }
-    
-    .nav-content {
-        gap: 12px;
-    }
-    
-    .nav-button,
-    .logout-button {
-        padding: 6px 12px;
-        font-size: 14px;
-    }
-}
-
-.nav-button:hover {
-    background-color: #E3F2FD;
-}
-
+/* Report container */
 .report-container {
-    padding-top: 80px;
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-}
-
-.user-header{
-    font-weight:700;
-    background:#f7f7f7;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #2a5c45;
 }
 
 .report-header {
-    background: linear-gradient(135deg, #1976D2, #64B5F6);
-    color: white;
-    padding: 30px;
-    border-radius: 10px;
+    text-align: center;
     margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #2a5c45;
 }
 
 .report-header h1 {
-    margin: 0;
-    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.military-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.divider-line {
+    height: 2px;
+    width: 100px;
+    background-color: #d10000;
+}
+
+.military-divider.small .divider-line {
+    width: 50px;
+}
+
+.military-divider i {
+    color: #d10000;
+}
+
+.military-divider.small i {
+    font-size: 0.8em;
+}
+
+/* User info card */
+.user-info-card {
+    background-color: #f8f9fa;
+    border-left: 4px solid #2a5c45;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    border-radius: 4px;
+}
+
+.rank-info, .unit-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 500;
 }
 
-.filter-card {
-    background: white;
-    padding: 24px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.rank-info i {
+    color: #d10000;
+}
+
+.unit-info i {
+    color: #2a5c45;
+}
+
+/* Filter card */
+.military-filter {
+    background-color: #e9ecef;
+    border: 1px solid #2a5c45;
+    border-radius: 6px;
+    padding: 15px;
     margin-bottom: 30px;
 }
 
 .filter-section {
     display: flex;
     gap: 20px;
-    align-items: center;
+    margin-bottom: 15px;
     flex-wrap: wrap;
 }
 
 .select-group {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
     min-width: 200px;
 }
 
 .select-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #666;
+    margin-bottom: 5px;
     font-weight: 500;
+    color: #2a5c45;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.user-select,
-.date-select {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: all 0.3s;
+.military-select {
+    padding: 8px 12px;
+    border: 1px solid #2a5c45;
+    border-radius: 4px;
     background-color: white;
-}
-
-.user-select:focus,
-.date-select:focus {
-    border-color: #2196F3;
-    outline: none;
-}
-
-.report-table-container {
-    background: white;
-    padding: 24px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow-x: auto;
-}
-
-.report-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 10px;
-}
-
-.report-table th {
-    background: #f5f5f5;
     color: #333;
+}
+
+.military-select:focus {
+    outline: none;
+    border-color: #d10000;
+    box-shadow: 0 0 0 2px rgba(209, 0, 0, 0.2);
+}
+
+.military-button {
+    background-color: #2a5c45;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 500;
-    padding: 16px;
-    text-align: center;
-    border-bottom: 2px solid #e0e0e0;
+    transition: all 0.3s;
 }
 
-.report-table td {
-    padding: 16px;
-    text-align: center;
-    border-bottom: 1px solid #e0e0e0;
+.military-button:hover {
+    background-color: #1e4a36;
+    transform: translateY(-2px);
 }
 
-.report-table tr:hover {
+/* Table styles */
+.military-table-container {
+    overflow-x: auto;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.military-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.military-table th {
+    background-color: #2a5c45;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 500;
+}
+
+.military-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.military-table tbody tr:nth-child(even) {
     background-color: #f8f9fa;
 }
 
-.report-table .confirmed {
-    color: #4CAF50;
+.military-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.military-table tfoot {
     font-weight: bold;
+    background-color: #f1f1f1;
+    color: #2a5c45;
 }
 
-.report-table .unconfirmed {
-    color: #f44336;
+.military-table tfoot td {
+    border-top: 2px solid #2a5c45;
 }
 
-#userInfo {
-    color: #1976D2;
-    font-size: 18px;
-    margin-bottom: 20px;
-    padding: 16px;
-    background: #E3F2FD;
+/* Anniversary card */
+.anniversary-card {
+    background-color: #f8f9fa;
+    border: 1px solid #d10000;
     border-radius: 6px;
-    display: inline-block;
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
 }
 
-#backBtn {
-    background-color: #1976D2;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+.anniversary-content h3 {
+    color: #d10000;
+    margin-bottom: 10px;
 }
 
+.anniversary-content p {
+    font-style: italic;
+    color: #2a5c45;
+    margin-bottom: 15px;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
     .filter-section {
         flex-direction: column;
+        gap: 10px;
     }
+    
     .select-group {
-        width: 100%;
+        min-width: 100%;
     }
-    .report-header {
-        padding: 20px;
+    
+    .nav-content {
+        flex-direction: column;
+        gap: 10px;
     }
-    .report-header h1 {
-        font-size: 24px;
+    
+    .military-title {
+        order: -1;
+        margin-bottom: 10px;
     }
 }

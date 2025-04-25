@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo cáo điểm danh</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Báo cáo điểm danh - Kỷ niệm 30/4</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <link rel="stylesheet" href="report.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
 </head>
 <body>
+    <!-- Banner kỷ niệm 30/4 -->
+    <div class="anniversary-banner">
+        <div class="banner-content">
+            <img src="./image/logo.webp" alt="Quốc kỳ" class="flag-icon">
+            <h2>KỶ NIỆM 50 NĂM NGÀY GIẢI PHÓNG MIỀN NAM (30/4/1975 - 30/4/2025)</h2>
+            <img src="./image/logoVN.png" alt="Huy hiệu" class="badge-icon">
+        </div>
+    </div>
+
     <nav class="navbar">
         <div class="nav-content">
             <a href="#" id="backBtn" class="nav-button">
                 <i class="fas fa-arrow-left"></i>
                 Quay lại
             </a>
+            <div class="military-title">
+                <i class="fas fa-star"></i>
+                HỆ THỐNG ĐIỂM DANH QUÂN SỰ
+                <i class="fas fa-star"></i>
+            </div>
             <button id="logoutBtn" class="logout-button">
                 <i class="fas fa-sign-out-alt"></i>
                 Đăng xuất
@@ -27,60 +40,96 @@
     <div class="report-container">
         <div class="report-header">
             <h1>
-                <i class="fas fa-chart-bar"></i>
-                Báo cáo điểm danh
+                <i class="fas fa-medal"></i>
+                BÁO CÁO ĐIỂM DANH CHIẾN SĨ
+                <i class="fas fa-medal"></i>
             </h1>
+            <div class="military-divider">
+                <div class="divider-line"></div>
+                <i class="fas fa-star"></i>
+                <div class="divider-line"></div>
+            </div>
         </div>
 
-        <div id="userInfo"></div>
+        <div id="userInfo" class="user-info-card">
+            <div class="rank-info">
+                <i class="fas fa-user-shield"></i>
+                <span id="userRank">Cấp bậc: Dân Quân Cơ Động</span>
+            </div>
+            <div class="unit-info">
+                <i class="fas fa-flag"></i>
+                <span id="userUnit">Đơn vị: Tiểu đội 1</span>
+            </div>
+            <div class="unit-info">
+                <i class="fa-solid fa-user"></i>
+                <span id="userUnit">Họ và tên: Hoàng Tân Đại</span>
+            </div>
+        </div>
 
-        <div class="filter-card">
+        <div class="filter-card military-filter">
             <div class="filter-section">
                 <!-- Phần filter cho admin -->
                 <div id="adminFilters" class="select-group" style="display: none;">
-                    <label for="userSelect">Người dùng</label>
-                    <select id="userSelect" class="user-select">
-                        <option value="">Chọn người dùng</option>
+                    <label for="userSelect"><i class="fas fa-users"></i> Chiến sĩ</label>
+                    <select id="userSelect" class="user-select military-select">
+                        <option value="">Chọn chiến sĩ</option>
                     </select>
                 </div>
 
                 <!-- Filter chung -->
                 <div class="select-group">
-                    <label for="monthSelect">Tháng</label>
-                    <select id="monthSelect" class="date-select">
+                    <label for="monthSelect"><i class="fas fa-calendar-alt"></i> Tháng</label>
+                    <select id="monthSelect" class="date-select military-select">
                         <option value="">Chọn tháng</option>
                     </select>
                 </div>
 
                 <div class="select-group">
-                    <label for="yearSelect">Năm</label>
-                    <select id="yearSelect" class="date-select">
+                    <label for="yearSelect"><i class="fas fa-calendar"></i> Năm</label>
+                    <select id="yearSelect" class="date-select military-select">
                         <option value="">Chọn năm</option>
+                        <!-- <option value="2024">2024 - Kỷ niệm 49 năm</option> -->
                     </select>
                 </div>
             </div>
+            <button id="filterBtn" class="military-button">
+                <i class="fas fa-search"></i> Xem báo cáo
+            </button>
         </div>
 
-        <div class="report-table-container">
-            <table class="report-table">
-                <thead>
-                    <tr id="dateHeaderRow">
-                      <!-- <th>Người dùng</th>
-                      <th>Tuần</th>
-                      <th>Thứ 2</th>
-                      <th>Thứ 3</th>
-                      <th>Thứ 4</th>
-                      <th>Thứ 5</th>
-                      <th>Thứ 6</th>
-                      <th>Thứ 7</th>
-                      <th>Chủ nhật</th> -->
-                    </tr>
-                  </thead>
-                <tbody id="reportTableBody">
-                </tbody>
+        <div class="report-table-container military-table-container">
+            <table class="report-table military-table">
+              <thead>
+                <tr>
+                  <th><i class="fas fa-user-tie"></i> Chiến sĩ</th>
+                  <th><i class="fas fa-calendar-day"></i> Ngày đi tuần</th>
+                  <th><i class="fas fa-hashtag"></i> Số ngày</th>
+                </tr>
+              </thead>
+              <tbody id="reportTableBody">
+                <!-- JS sẽ đổ dữ liệu vào đây -->
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2"><i class="fas fa-clipboard-list"></i> Tổng số ngày trực (toàn đơn vị)</td>
+                  <td id="totalDaysAll">0</td>
+                </tr>
+              </tfoot>
             </table>
-        </div>
+          </div>
 
+        <!-- Phần chúc mừng 30/4 -->
+        <div class="anniversary-card">
+            <div class="anniversary-content">
+                <h3><i class="fas fa-flag"></i> KỶ NIỆM NGÀY GIẢI PHÓNG MIỀN NAM 30/4</h3>
+                <p>"Tiếp bước truyền thống cha anh - Xây dựng quân đội nhân dân anh hùng"</p>
+                <div class="military-divider small">
+                    <div class="divider-line"></div>
+                    <i class="fas fa-star small"></i>
+                    <div class="divider-line"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="module" src="report.js"></script>
