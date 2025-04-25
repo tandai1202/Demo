@@ -1,0 +1,373 @@
+/* user.css */
+:root {
+    --primary-color: #2a5c45; /* Xanh lá cây quân đội */
+    --secondary-color: #d4af37; /* Vàng sao cờ */
+    --accent-color: #c1121f; /* Đỏ cờ */
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --bg-gradient: linear-gradient(135deg, #2a5c45 0%, #1e3c2a 100%);
+    --border-radius: 8px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  body {
+    background-color: #f0f0f0;
+    background-image: url('https://example.com/military-pattern.jpg'); /* Thay bằng hình nền phù hợp */
+    background-size: cover;
+    background-attachment: fixed;
+    color: var(--dark-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header */
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 15px 20px;
+    background: var(--bg-gradient);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .dashboard-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-color);
+  }
+  
+  .dashboard-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: var(--text-shadow);
+  }
+  
+  .dashboard-title i {
+    color: var(--secondary-color);
+  }
+  
+  /* Buttons */
+  .logout-button, .nav-button, .login-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .logout-button {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  
+  .logout-button:hover {
+    background-color: #a00e1a;
+    transform: translateY(-2px);
+  }
+  
+  .nav-button {
+    background-color: var(--secondary-color);
+    color: var(--dark-color);
+  }
+  
+  .nav-button:hover {
+    background-color: #c9a227;
+    transform: translateY(-2px);
+  }
+  
+  .login-button {
+    background-color: var(--primary-color);
+    color: white;
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    margin-top: 15px;
+  }
+  
+  .login-button:hover {
+    background-color: #1e3c2a;
+    transform: translateY(-2px);
+  }
+  
+  /* Cards */
+  .login-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 25px;
+    margin-bottom: 20px;
+    border-top: 3px solid var(--accent-color);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .login-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-color);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .login-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .login-header i {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+  }
+  
+  .login-header h2 {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+  }
+  
+  .info-text {
+    font-size: 0.9rem;
+    margin-left: 55px;
+  }
+  
+  /* Checkbox group */
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    user-select: none;
+  }
+  
+  .checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .checkbox-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  
+  .checkbox-label:hover input ~ .checkbox-custom {
+    background-color: #ddd;
+  }
+  
+  .checkbox-label input:checked ~ .checkbox-custom {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .checkbox-custom:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  
+  .checkbox-label input:checked ~ .checkbox-custom:after {
+    display: block;
+  }
+  
+  .checkbox-label i {
+    color: var(--primary-color);
+  }
+  
+  /* Table */
+  .table-responsive {
+    overflow-x: auto;
+    margin-top: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .vote-cell {
+    font-weight: 500;
+    color: var(--primary-color);
+  }
+  
+  .attendance-cell {
+    font-style: italic;
+    color: #666;
+  }
+  
+  .week-date {
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 5px;
+    background-color: rgba(42, 92, 69, 0.1);
+    border-radius: 4px;
+  }
+  
+  .status-message {
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .dashboard-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .dashboard-title {
+      font-size: 1.5rem;
+    }
+    
+    .checkbox-group {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .login-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .info-text {
+      margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    body {
+      padding: 10px;
+    }
+    
+    .container {
+      padding: 10px;
+    }
+    
+    .checkbox-group {
+      grid-template-columns: 1fr;
+    }
+    
+    th, td {
+      padding: 8px 10px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Special 30/4 theme elements */
+  .dashboard-header::after {
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    font-style: italic;
+  }
+  
+  .login-card::before {
+    content: "✯";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+  }
+  
+  /* Animation for patriotic effect */
+  @keyframes patriotic {
+    0% { color: var(--primary-color); }
+    50% { color: var(--accent-color); }
+    100% { color: var(--secondary-color); }
+  }
+  
+  .dashboard-title {
+    animation: patriotic 5s infinite alternate;
+  }
