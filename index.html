@@ -9,11 +9,11 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
+  <!-- <div class="container">
     <div class="login-card">
       <div class="login-header">
         <i class="fas fa-user-circle"></i>
-        <h1>Đăng Nhập login áhdbasc a</h1>
+        <h1>Đăng Nhập</h1>
       </div>
       
       <form id="login-form" class="login-form">
@@ -42,6 +42,31 @@
       <p class="signup-link">
         Chưa có tài khoản? 
         <a href="signup.html">Đăng ký tại đây</a>
+      </p>
+    </div>
+  </div> -->
+
+  <div class="container">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="./image/logo.webp" alt="Logo dân quân" class="logo">
+        <h1>Đăng nhập</h1>
+      </div>
+      <form id="login-form" class="login-form">
+        <div class="form-group">
+          <label for="email"><i class="fas fa-user"></i>Tên đăng nhập</label>
+          <input type="email" id="email" required placeholder="Nhập tên đăng nhập">
+        </div>
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i>Mật khẩu</label>
+          <input type="password" id="password" required placeholder="">
+        </div>
+        <button type="submit" class="login-button">
+          Đăng nhập <i class="fas fa-fingerprint"></i>
+        </button>
+      </form>
+      <p class="signup-link">
+        Bạn chưa có tài khoản? <a href="signup.html">Đăng ký ngay</a>
       </p>
     </div>
   </div>
