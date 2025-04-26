@@ -1,0 +1,29 @@
+/* src/css/schedule.css */
+.date-filter {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+  }
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .table-container {
+    overflow-x: auto;
+    margin-top: 1rem;
+  }
+  #allInOneTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  #allInOneTable th,
+  #allInOneTable td {
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+  }
+  .action-buttons {
+    text-align: right;
+    margin-top: 1rem;
+  }

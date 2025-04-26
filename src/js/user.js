@@ -86,7 +86,7 @@ async function getAllowedDays() {
   
   // Tuần đầu tiên
   if (!previousVote) {
-    return ['mon', 'thu', 'sun']; // T2, T5, CN
+    return ['wed', 'sun']; // T2, T5, CN
   }
 
   // Tìm ngày chọn cuối cùng của tuần trước

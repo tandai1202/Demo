@@ -180,85 +180,145 @@ function getDaysInMonth(month, year) {
 }
 
 // Load và hiển thị dữ liệu báo cáo
+// async function loadReportData() {
+//     const month = +document.getElementById("monthSelect").value;
+//     const year = +document.getElementById("yearSelect").value;
+//     const days = getDaysInMonth(month, year);
+
+//     // ----- Build header (1…n) -----
+//     const headRow = document.querySelector(".report-table thead tr");
+//     headRow.innerHTML = "<th>Người dùng</th>";
+//     days.forEach((d) => {
+//         headRow.innerHTML += `<th>${d.getDate()}</th>`;
+//     });
+
+//     // ----- Body -----
+//     const tbody = document.getElementById("reportTableBody");
+//     tbody.innerHTML = "";
+
+    
+//     // Lấy danh sách người dùng
+//     // const usersRef = collection(db, 'users');
+//     // const q = query(usersRef, where('role', '==', 'user'));
+//     // const querySnapshot = await getDocs(q);
+//     // const userListAdmin = [];
+//     // querySnapshot.forEach((docSnap) => {
+//     //     let userData = docSnap.data();
+//     //     userData.id = docSnap.id;
+//     //     userListAdmin.push(userData);
+//     // });
+    
+//     // const targets = currentUserRole === "admin" ? userListAdmin : usersList; // giữ rõ ràng
+//     // console.log(targets)
+//     // console.log(userList)
+
+//     if (!usersList.length && currentUserRole === "admin") await loadUsersList();
+
+//     // Vẫn rỗng => hiển thị thông báo
+//     if (!usersList.length) {
+//         document.getElementById("reportTableBody").innerHTML =
+//             `<tr><td colspan="${days.length + 1}">Không tìm thấy người dùng</td></tr>`;
+//         return;
+//     }
+
+//     for (const user of usersList) {
+//         // Pre‑fetch tuần liên quan
+//         const weeksCache = {};
+//         const weeksNeeded = new Set(days.map((d) => getWeekNumber(d)));
+//         for (const wk of weeksNeeded) {
+//             const id = getWeekId(year, wk);
+//             const snap = await getDoc(doc(db, "weeks", id, "votes", user.id));
+//             weeksCache[id] = snap.exists() ? snap.data() : null;
+//         }
+
+//         const row = document.createElement("tr");
+//         const nameTd = document.createElement("td");
+//         nameTd.textContent = user.email;
+//         row.appendChild(nameTd);
+
+//         days.forEach((date) => {
+//             const td = document.createElement("td");
+//             const weekId = getWeekId(year, getWeekNumber(date));
+//             const data = weeksCache[weekId];
+//             const key = weekdayKeys[date.getDay()];
+//             if (data && data.days[key]) {
+//                 if (data.confirmed[key]) {
+//                     td.innerHTML = data.attendance[key]
+//                         ? "<span class='confirmed'>✔</span>"
+//                         : "<span class='unconfirmed'>✘</span>";
+//                 } else {
+//                     td.innerHTML = "<span class='unconfirmed'>⋯</span>";
+//                 }
+//                 td.title = `${weekDayMapping[key]} - ${data.confirmed[key] ? "Đã xác nhận" : "Chưa xác nhận"}`;
+//             } else {
+//                 td.textContent = "–";
+//             }
+//             row.appendChild(td);
+//         });
+
+//         tbody.appendChild(row);
+//     }
+// }
+
 async function loadReportData() {
     const month = +document.getElementById("monthSelect").value;
-    const year = +document.getElementById("yearSelect").value;
-    const days = getDaysInMonth(month, year);
-
-    // ----- Build header (1…n) -----
-    const headRow = document.querySelector(".report-table thead tr");
-    headRow.innerHTML = "<th>Người dùng</th>";
-    days.forEach((d) => {
-        headRow.innerHTML += `<th>${d.getDate()}</th>`;
-    });
-
-    // ----- Body -----
+    const year  = +document.getElementById("yearSelect").value;
+    const days  = getDaysInMonth(month, year);
+  
+    // header cột đã có sẵn trong HTML
     const tbody = document.getElementById("reportTableBody");
     tbody.innerHTML = "";
-
-    
-    // Lấy danh sách người dùng
-    // const usersRef = collection(db, 'users');
-    // const q = query(usersRef, where('role', '==', 'user'));
-    // const querySnapshot = await getDocs(q);
-    // const userListAdmin = [];
-    // querySnapshot.forEach((docSnap) => {
-    //     let userData = docSnap.data();
-    //     userData.id = docSnap.id;
-    //     userListAdmin.push(userData);
-    // });
-    
-    // const targets = currentUserRole === "admin" ? userListAdmin : usersList; // giữ rõ ràng
-    // console.log(targets)
-    // console.log(userList)
-
-    if (!usersList.length && currentUserRole === "admin") await loadUsersList();
-
-    // Vẫn rỗng => hiển thị thông báo
-    if (!usersList.length) {
-        document.getElementById("reportTableBody").innerHTML =
-            `<tr><td colspan="${days.length + 1}">Không tìm thấy người dùng</td></tr>`;
-        return;
-    }
-
+  
+    let grandTotal = 0;
+  
+    if (!usersList.length && currentUserRole === "admin") 
+      await loadUsersList();
+  
     for (const user of usersList) {
-        // Pre‑fetch tuần liên quan
-        const weeksCache = {};
-        const weeksNeeded = new Set(days.map((d) => getWeekNumber(d)));
-        for (const wk of weeksNeeded) {
-            const id = getWeekId(year, wk);
-            const snap = await getDoc(doc(db, "weeks", id, "votes", user.id));
-            weeksCache[id] = snap.exists() ? snap.data() : null;
+      // --- fetch tuần vào cache như trước ---
+      const weeksNeeded = new Set(days.map(d => getWeekNumber(d)));
+      const weeksCache  = {};
+      for (const wk of weeksNeeded) {
+        const id   = getWeekId(year, wk);
+        const snap = await getDoc(doc(db, "weeks", id, "votes", user.id));
+        weeksCache[id] = snap.exists() ? snap.data() : null;
+      }
+  
+      // --- gom ngày đã đi tuần và confirmed ---
+      const attended = [];
+      days.forEach(d => {
+        const weekId = getWeekId(year, getWeekNumber(d));
+        const data   = weeksCache[weekId];
+        const key    = weekdayKeys[d.getDay()];
+        if (data && data.attendance[key] && data.confirmed[key]) {
+          attended.push(`${d.getDate()}/${month}`);
         }
-
-        const row = document.createElement("tr");
-        const nameTd = document.createElement("td");
-        nameTd.textContent = user.email;
-        row.appendChild(nameTd);
-
-        days.forEach((date) => {
-            const td = document.createElement("td");
-            const weekId = getWeekId(year, getWeekNumber(date));
-            const data = weeksCache[weekId];
-            const key = weekdayKeys[date.getDay()];
-            if (data && data.days[key]) {
-                if (data.confirmed[key]) {
-                    td.innerHTML = data.attendance[key]
-                        ? "<span class='confirmed'>✔</span>"
-                        : "<span class='unconfirmed'>✘</span>";
-                } else {
-                    td.innerHTML = "<span class='unconfirmed'>⋯</span>";
-                }
-                td.title = `${weekDayMapping[key]} - ${data.confirmed[key] ? "Đã xác nhận" : "Chưa xác nhận"}`;
-            } else {
-                td.textContent = "–";
-            }
-            row.appendChild(td);
-        });
-
-        tbody.appendChild(row);
+      });
+  
+      // --- đếm và cộng vào tổng chung ---
+      const count = attended.length;
+      grandTotal += count;
+  
+      // --- tạo row ---
+      const tr      = document.createElement("tr");
+      const tdEmail = document.createElement("td");
+      const tdDays  = document.createElement("td");
+      const tdCount = document.createElement("td");
+  
+      tdEmail.textContent = user.email;
+      tdDays.textContent  = attended.length
+        ? attended.join(", ")
+        : "Chưa có ngày nào";
+      tdCount.textContent = count;
+  
+      tr.append(tdEmail, tdDays, tdCount);
+      tbody.appendChild(tr);
     }
-}
+  
+    // ghi tổng chung vào footer
+    document.getElementById("totalDaysAll").textContent = grandTotal;
+  }
+  
 
 // Xử lý đăng xuất
 document.getElementById('logoutBtn').addEventListener('click', async () => {
