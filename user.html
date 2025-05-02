@@ -35,56 +35,134 @@
       </div>
 
       <form id="voteForm" class="login-form">
+        <!-- <div class="checkbox-group">
+          <label><input type="checkbox" data-day="mon"> Thứ 2</label>
+          <label><input type="checkbox" data-day="tue"> Thứ 3</label>
+          <label><input type="checkbox" data-day="wed"> Thứ 4</label>
+          <label><input type="checkbox" data-day="thu"> Thứ 5</label>
+          <label><input type="checkbox" data-day="fri"> Thứ 6</label>
+          <label><input type="checkbox" data-day="sat"> Thứ 7</label>
+          <label><input type="checkbox" data-day="sun"> Chủ nhật</label>
+        </div> -->
+
+        <!-- <div class="checkbox-group">
+          <label>
+            <input type="checkbox" data-day="mon" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            <span class="day-name">Thứ 2</span>
+            <span class="day-status"></span>
+          </label>
+
+          <label>
+            <input type="checkbox" data-day="tue" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            <span class="day-name">Thứ 3</span>
+            <span class="day-status"></span>
+          </label>
+
+          <label>
+            <input type="checkbox" data-day="wed" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            <span class="day-name">Thứ 4</span>
+            <span class="day-status"></span>
+          </label>
+
+          <label>
+            <input type="checkbox" data-day="thu" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            <span class="day-name">Thứ 5</span>
+            <span class="day-status"></span>
+          </label>
+
+          <label>
+            <input type="checkbox" data-day="fri" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            <span class="day-name">Thứ 6</span>
+            <span class="day-status"></span>
+          </label>
+
+          <label>
+            <input type="checkbox" data-day="sat" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            <span class="day-name">Thứ 7</span>
+            <span class="day-status"></span>
+          </label>
+
+          <label>
+            <input type="checkbox" data-day="sun" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            <span class="day-name">Chủ nhật</span>
+            <span class="day-status"></span>
+          </label>
+        </div> -->
+
         <div class="checkbox-group">
           <label class="checkbox-label">
-            <input type="checkbox" name="days" value="mon" />
+            <input type="checkbox" data-day="mon" />
             <span class="checkbox-custom"></span>
             <i class="fas fa-calendar-day"></i>
-            Thứ 2
+            <span class="day-name">Thứ 2</span>
+            <span class="day-status"></span>
+          </label>
+        
+          <label class="checkbox-label">
+            <input type="checkbox" data-day="tue" />
+            <span class="checkbox-custom"></span>
+            <i class="fas fa-calendar-day"></i>
+            <span class="day-name">Thứ 3</span>
+            <span class="day-status"></span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="days" value="tue" />
+            <input type="checkbox" data-day="wed" />
             <span class="checkbox-custom"></span>
             <i class="fas fa-calendar-day"></i>
-            Thứ 3
+            <span class="day-name">Thứ 4</span>
+            <span class="day-status"></span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="days" value="wed" />
+            <input type="checkbox" data-day="thu" />
             <span class="checkbox-custom"></span>
             <i class="fas fa-calendar-day"></i>
-            Thứ 4
+            <span class="day-name">Thứ 5</span>
+            <span class="day-status"></span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="days" value="thu" />
+            <input type="checkbox" data-day="fri" />
             <span class="checkbox-custom"></span>
             <i class="fas fa-calendar-day"></i>
-            Thứ 5
+            <span class="day-name">Thứ 6</span>
+            <span class="day-status"></span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="days" value="fri" />
+            <input type="checkbox" data-day="sat" />
             <span class="checkbox-custom"></span>
             <i class="fas fa-calendar-day"></i>
-            Thứ 6
+            <span class="day-name">Thứ 7</span>
+            <span class="day-status"></span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="days" value="sat" />
+            <input type="checkbox" data-day="sun" />
             <span class="checkbox-custom"></span>
             <i class="fas fa-calendar-day"></i>
-            Thứ 7
+            <span class="day-name">Chủ nhật</span>
+            <span class="day-status"></span>
           </label>
-
-          <label class="checkbox-label">
-            <input type="checkbox" name="days" value="sun" />
-            <span class="checkbox-custom"></span>
-            <i class="fas fa-calendar-day"></i>
-            Chủ Nhật
-          </label>
+        
+          <!-- Các ngày khác tương tự -->
         </div>
+        
 
         <button type="submit" class="login-button">
           <span>Gửi bình chọn</span>
@@ -144,5 +222,6 @@
   <!-- Import modules -->
   <script type="module" src="./src/js/firebase-config.js"></script>
   <script type="module" src="./src/js/user.js"></script>
+   <!-- <script src="./src/js/demo-user.js"></script> -->
 </body>
 </html>

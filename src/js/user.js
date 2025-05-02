@@ -49,7 +49,7 @@ onAuthStateChanged(auth, async (user) => {
       if (userData.role === 'user') {
         document.getElementById('voteSection').style.display = 'block';
         document.getElementById('titleVote').textContent = `Bình chọn ngày đi làm tuần này (${getCurrentWeekId()})`;
-        await setupVoteForm(); // Thêm hàm setup form
+        // await setupVoteForm(); // Thêm hàm setup form
       } else if (userData.role === 'admin') {
         window.location.href = 'admin.html';
       } else {
@@ -66,84 +66,84 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // Hàm lấy bình chọn của tuần trước
-async function getPreviousWeekVote() {
-  const user = auth.currentUser;
-  if (!user) return null;
+// async function getPreviousWeekVote() {
+//   const user = auth.currentUser;
+//   if (!user) return null;
 
-  const currentWeekId = getCurrentWeekId();
-  const [year, week] = currentWeekId.split("-W");
-  const previousWeek = parseInt(week) - 1;
-  const previousWeekId = previousWeek > 0 ? `${year}-W${previousWeek}` : `${parseInt(year)-1}-W52`;
+//   const currentWeekId = getCurrentWeekId();
+//   const [year, week] = currentWeekId.split("-W");
+//   const previousWeek = parseInt(week) - 1;
+//   const previousWeekId = previousWeek > 0 ? `${year}-W${previousWeek}` : `${parseInt(year)-1}-W52`;
 
-  const voteDoc = await getDoc(doc(db, 'weeks', previousWeekId, 'votes', user.uid));
-  return voteDoc.exists() ? voteDoc.data() : null;
-}
+//   const voteDoc = await getDoc(doc(db, 'weeks', previousWeekId, 'votes', user.uid));
+//   return voteDoc.exists() ? voteDoc.data() : null;
+// }
 
 // Hàm lấy ngày được phép chọn
-async function getAllowedDays() {
-  const weekId = getCurrentWeekId();
-  const previousVote = await getPreviousWeekVote();
+// async function getAllowedDays() {
+//   const weekId = getCurrentWeekId();
+//   const previousVote = await getPreviousWeekVote();
   
-  // Tuần đầu tiên
-  if (!previousVote) {
-    return ['wed', 'sun']; // T2, T5, CN
-  }
+//   // Tuần đầu tiên
+//   if (!previousVote) {
+//     return ['wed', 'sun']; // T2, T5, CN
+//   }
 
-  // Tìm ngày chọn cuối cùng của tuần trước
-  let lastSelectedDay = null;
-  const days = Object.entries(previousVote.days);
-  for (let i = days.length - 1; i >= 0; i--) {
-    if (days[i][1] === true) {
-      lastSelectedDay = days[i][0];
-      break;
-    }
-  }
+//   // Tìm ngày chọn cuối cùng của tuần trước
+//   let lastSelectedDay = null;
+//   const days = Object.entries(previousVote.days);
+//   for (let i = days.length - 1; i >= 0; i--) {
+//     if (days[i][1] === true) {
+//       lastSelectedDay = days[i][0];
+//       break;
+//     }
+//   }
 
-  if (!lastSelectedDay) return [];
+//   if (!lastSelectedDay) return [];
 
-  // Tính toán ngày cho phép của tuần này (cách 4 ngày)
-  const lastDayNumber = weekDayMapping[lastSelectedDay];
-  const firstAllowedDay = ((lastDayNumber + 4) % 7) || 7;
-  const secondAllowedDay = ((firstAllowedDay + 4) % 7) || 7;
+//   // Tính toán ngày cho phép của tuần này (cách 4 ngày)
+//   const lastDayNumber = weekDayMapping[lastSelectedDay];
+//   const firstAllowedDay = ((lastDayNumber + 4) % 7) || 7;
+//   const secondAllowedDay = ((firstAllowedDay + 4) % 7) || 7;
 
-  return [dayMappingReverse[firstAllowedDay], dayMappingReverse[secondAllowedDay]];
-}
+//   return [dayMappingReverse[firstAllowedDay], dayMappingReverse[secondAllowedDay]];
+// }
 
 // Setup form bình chọn
-async function setupVoteForm() {
-  const allowedDays = await getAllowedDays();
-  const weekId = getCurrentWeekId();
-  const user = auth.currentUser;
+// async function setupVoteForm() {
+//   const allowedDays = await getAllowedDays();
+//   const weekId = getCurrentWeekId();
+//   const user = auth.currentUser;
   
-  // Kiểm tra nếu có bất kỳ ngày nào đã được xác nhận
-  if (user) {
-    const voteDoc = await getDoc(doc(db, 'weeks', weekId, 'votes', user.uid));
-    if (voteDoc.exists() && Object.values(voteDoc.data().confirmed || {}).some(v => v)) {
-      // Disable toàn bộ form nếu có bất kỳ ngày nào đã được xác nhận
-      document.querySelectorAll('input[name="days"]').forEach(checkbox => {
-        checkbox.disabled = true;
-        checkbox.closest('.checkbox-label').classList.add('disabled');
-      });
-      document.getElementById('voteStatus').textContent = "Bình chọn đã có ngày được xác nhận, không thể thay đổi!";
-      return;
-    }
-  }
+//   // Kiểm tra nếu có bất kỳ ngày nào đã được xác nhận
+//   if (user) {
+//     const voteDoc = await getDoc(doc(db, 'weeks', weekId, 'votes', user.uid));
+//     if (voteDoc.exists() && Object.values(voteDoc.data().confirmed || {}).some(v => v)) {
+//       // Disable toàn bộ form nếu có bất kỳ ngày nào đã được xác nhận
+//       document.querySelectorAll('input[name="days"]').forEach(checkbox => {
+//         checkbox.disabled = true;
+//         checkbox.closest('.checkbox-label').classList.add('disabled');
+//       });
+//       document.getElementById('voteStatus').textContent = "Bình chọn đã có ngày được xác nhận, không thể thay đổi!";
+//       return;
+//     }
+//   }
   
-  // Disable tất cả checkbox
-  document.querySelectorAll('input[name="days"]').forEach(checkbox => {
-    checkbox.disabled = true;
-    checkbox.closest('.checkbox-label').classList.remove('disabled');
-  });
+//   // Disable tất cả checkbox
+//   document.querySelectorAll('input[name="days"]').forEach(checkbox => {
+//     checkbox.disabled = true;
+//     checkbox.closest('.checkbox-label').classList.remove('disabled');
+//   });
 
-  // Enable chỉ những ngày được phép
-  allowedDays.forEach(day => {
-    const checkbox = document.querySelector(`input[value="${day}"]`);
-    if (checkbox) {
-      checkbox.disabled = false;
-      checkbox.closest('.checkbox-label').classList.remove('disabled');
-    }
-  });
-}
+//   // Enable chỉ những ngày được phép
+//   allowedDays.forEach(day => {
+//     const checkbox = document.querySelector(`input[value="${day}"]`);
+//     if (checkbox) {
+//       checkbox.disabled = false;
+//       checkbox.closest('.checkbox-label').classList.remove('disabled');
+//     }
+//   });
+// }
 
 // Hiển thị lịch bình chọn cá nhân
 async function loadMyVotes() {
@@ -195,10 +195,10 @@ async function loadMyVotes() {
     }
 
     // Hiển thị trạng thái chấm công
-    for (const [day, value] of Object.entries(attendance)) { 
-      const dayAttendanceElement = document.getElementById(`${day}Attendance`);
-      if (dayAttendanceElement) dayAttendanceElement.textContent = value ? "✔️" : "–";
-    } 
+    // for (const [day, value] of Object.entries(attendance)) { 
+    //   const dayAttendanceElement = document.getElementById(`${day}Attendance`);
+    //   if (dayAttendanceElement) dayAttendanceElement.textContent = value ? "✔️" : "–";
+    // } 
 
     // Thêm thông báo về trạng thái xác nhận
     const confirmedDays = Object.entries(confirmed).filter(([_, value]) => value).map(([day]) => day);
@@ -220,71 +220,71 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// Xử lý submit form bình chọn
-const voteForm = document.getElementById('voteForm');
-voteForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const user = auth.currentUser;
-  if (!user) return alert("Bạn chưa đăng nhập!");
+// // Xử lý submit form bình chọn
+// const voteForm = document.getElementById('voteForm');
+// voteForm.addEventListener('submit', async (e) => {
+//   e.preventDefault();
+//   const user = auth.currentUser;
+//   if (!user) return alert("Bạn chưa đăng nhập!");
 
-  const weekId = getCurrentWeekId();
-  const voteRef = doc(db, 'weeks', weekId, 'votes', user.uid);
-  const voteDoc = await getDoc(voteRef);
+//   const weekId = getCurrentWeekId();
+//   const voteRef = doc(db, 'weeks', weekId, 'votes', user.uid);
+//   const voteDoc = await getDoc(voteRef);
 
-  // Kiểm tra nếu có bất kỳ ngày nào đã được xác nhận
-  if (voteDoc.exists() && Object.values(voteDoc.data().confirmed || {}).some(v => v)) {
-    return alert("Bình chọn của tuần này đã có ngày được admin xác nhận, không thể thay đổi!");
-  }
+//   // Kiểm tra nếu có bất kỳ ngày nào đã được xác nhận
+//   if (voteDoc.exists() && Object.values(voteDoc.data().confirmed || {}).some(v => v)) {
+//     return alert("Bình chọn của tuần này đã có ngày được admin xác nhận, không thể thay đổi!");
+//   }
 
-  // Kiểm tra khoảng cách giữa các ngày được chọn
-  const checkedDays = Array.from(document.querySelectorAll('input[name="days"]:checked'))
-    .map(d => ({
-      key: d.value,
-      number: weekDayMapping[d.value]
-    }))
-    .sort((a, b) => a.number - b.number);
+//   // Kiểm tra khoảng cách giữa các ngày được chọn
+//   const checkedDays = Array.from(document.querySelectorAll('input[name="days"]:checked'))
+//     .map(d => ({
+//       key: d.value,
+//       number: weekDayMapping[d.value]
+//     }))
+//     .sort((a, b) => a.number - b.number);
 
-  if (checkedDays.length > 0) {
-    // Kiểm tra khoảng cách 4 ngày
-    for (let i = 1; i < checkedDays.length; i++) {
-      const diff = checkedDays[i].number - checkedDays[i-1].number;
-      if (diff < 3) { 
-        const day1 = getDayName(checkedDays[i-1].key);
-        const day2 = getDayName(checkedDays[i].key);
-        return alert(`${day1} và ${day2} cách nhau chưa đủ 4 ngày!`);
-      } 
-    }
-  }
+//   if (checkedDays.length > 0) {
+//     // Kiểm tra khoảng cách 4 ngày
+//     for (let i = 1; i < checkedDays.length; i++) {
+//       const diff = checkedDays[i].number - checkedDays[i-1].number;
+//       if (diff < 3) { 
+//         const day1 = getDayName(checkedDays[i-1].key);
+//         const day2 = getDayName(checkedDays[i].key);
+//         return alert(`${day1} và ${day2} cách nhau chưa đủ 4 ngày!`);
+//       } 
+//     }
+//   }
 
-  const newDaysObj = { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false };
-  checkedDays.forEach(day => {
-    newDaysObj[day.key] = true;
-  });
+//   const newDaysObj = { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false };
+//   checkedDays.forEach(day => {
+//     newDaysObj[day.key] = true;
+//   });
 
-  // Kiểm tra xem còn ngày nào được chọn không
-  if (!Object.values(newDaysObj).some(v => v)) {
-    return alert("Vui lòng chọn ít nhất một ngày!");
-  }
+//   // Kiểm tra xem còn ngày nào được chọn không
+//   if (!Object.values(newDaysObj).some(v => v)) {
+//     return alert("Vui lòng chọn ít nhất một ngày!");
+//   }
 
-  try {
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-    const userEmail = userDoc.data().email || "Unknown";
+//   try {
+//     const userDoc = await getDoc(doc(db, 'users', user.uid));
+//     const userEmail = userDoc.data().email || "Unknown";
 
-    await setDoc(voteRef, {
-      userEmail: userEmail,
-      days: newDaysObj,
-      votedAt: serverTimestamp(),
-      attendance: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false },
-      confirmed: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false }
-    });
+//     await setDoc(voteRef, {
+//       userEmail: userEmail,
+//       days: newDaysObj,
+//       votedAt: serverTimestamp(),
+//       attendance: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false },
+//       confirmed: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false }
+//     });
 
-    document.getElementById('voteStatus').textContent = "Gửi bình chọn thành công!";
-    loadMyVotes(); // Cập nhật bảng bình chọn cá nhân
-  } catch (err) {
-    console.error(err);
-    document.getElementById('voteStatus').textContent = "Lỗi khi gửi bình chọn!";
-  }
-});
+//     document.getElementById('voteStatus').textContent = "Gửi bình chọn thành công!";
+//     loadMyVotes(); // Cập nhật bảng bình chọn cá nhân
+//   } catch (err) {
+//     console.error(err);
+//     document.getElementById('voteStatus').textContent = "Lỗi khi gửi bình chọn!";
+//   }
+// });
 
 // Xử lý đăng xuất
 document.getElementById('logoutBtn').addEventListener('click', async () => {
@@ -305,34 +305,34 @@ function getStartOfWeek(weekId) {
   return startOfWeek;
 }
 
-function getCurrentWeekId() {
-  const now = new Date();
+// function getCurrentWeekId() {
+//   const now = new Date();
   
-  // Tính ngày thứ Hai của tuần hiện tại
-  const currentMonday = new Date(now);
-  const dayOfWeek = now.getDay() || 7; // Chuyển Chủ nhật từ 0 thành 7
-  currentMonday.setDate(now.getDate() - dayOfWeek + 1);
+//   // Tính ngày thứ Hai của tuần hiện tại
+//   const currentMonday = new Date(now);
+//   const dayOfWeek = now.getDay() || 7; // Chuyển Chủ nhật từ 0 thành 7
+//   currentMonday.setDate(now.getDate() - dayOfWeek + 1);
   
-  // Tính tuần ISO 8601
-  // Sử dụng thuật toán: Lấy ngày thứ Năm của tuần hiện tại và đếm số tuần từ ngày thứ Năm đầu tiên của năm
-  const thursdayOfCurrentWeek = new Date(now);
-  thursdayOfCurrentWeek.setDate(now.getDate() - ((dayOfWeek + 6) % 7) + 4);
+//   // Tính tuần ISO 8601
+//   // Sử dụng thuật toán: Lấy ngày thứ Năm của tuần hiện tại và đếm số tuần từ ngày thứ Năm đầu tiên của năm
+//   const thursdayOfCurrentWeek = new Date(now);
+//   thursdayOfCurrentWeek.setDate(now.getDate() - ((dayOfWeek + 6) % 7) + 4);
   
-  // Lấy năm của ngày thứ Năm (đây là năm ISO)
-  const year = thursdayOfCurrentWeek.getFullYear();
+//   // Lấy năm của ngày thứ Năm (đây là năm ISO)
+//   const year = thursdayOfCurrentWeek.getFullYear();
   
-  // Tìm ngày thứ Năm đầu tiên của năm
-  const firstDayOfYear = new Date(year, 0, 1);
-  const firstThursdayOfYear = new Date(year, 0, 1 + ((11 - firstDayOfYear.getDay()) % 7));
+//   // Tìm ngày thứ Năm đầu tiên của năm
+//   const firstDayOfYear = new Date(year, 0, 1);
+//   const firstThursdayOfYear = new Date(year, 0, 1 + ((11 - firstDayOfYear.getDay()) % 7));
   
-  // Tính số tuần
-  const weekNumber = 1 + Math.floor((thursdayOfCurrentWeek - firstThursdayOfYear) / (7 * 24 * 60 * 60 * 1000));
+//   // Tính số tuần
+//   const weekNumber = 1 + Math.floor((thursdayOfCurrentWeek - firstThursdayOfYear) / (7 * 24 * 60 * 60 * 1000));
   
-  // Định dạng số tuần
-  const formattedWeek = weekNumber < 10 ? `0${weekNumber}` : weekNumber;
+//   // Định dạng số tuần
+//   const formattedWeek = weekNumber < 10 ? `0${weekNumber}` : weekNumber;
    
-  return `${year}-W${formattedWeek}`;
-}
+//   return `${year}-W${formattedWeek}`;
+// }
 
 function currentMonday() {
   //dd/mm/yyyy
@@ -350,16 +350,124 @@ function currentMonday() {
   return formattedDate;
 }
 
+// Ánh xạ số ↔ mã ngày và tên hiển thị
+const dayMapping = { 1:'mon',2:'tue',3:'wed',4:'thu',5:'fri',6:'sat',7:'sun' };
 function getDayName(day) {
-  const dayNames = {
-    'mon': 'Thứ 2',
-    'tue': 'Thứ 3',
-    'wed': 'Thứ 4',
-    'thu': 'Thứ 5',
-    'fri': 'Thứ 6',
-    'sat': 'Thứ 7',
-    'sun': 'Chủ nhật'
-  };
-  return dayNames[day] || day;
+  const names = { mon:'Thứ 2',tue:'Thứ 3',wed:'Thứ 4',thu:'Thứ 5',fri:'Thứ 6',sat:'Thứ 7',sun:'Chủ nhật' };
+  return names[day] || day;
 }
- 
+
+// Ánh xạ tuần tự thứ → số trong tuần (Mon=1…Sun=7)
+const dayNumber = { mon:1, tue:2, wed:3, thu:4, fri:5, sat:6, sun:7 };
+
+// Lấy ISO‐week hiện tại như “2025-W19”
+function getCurrentWeekId() {
+  const now = new Date();
+  const day = now.getDay() || 7; // Sun=0→7
+  const thursday = new Date(now);
+  thursday.setDate(now.getDate() - (day - 4));
+  const year = thursday.getFullYear();
+  const firstThu = new Date(year,0,1 + ((11 - new Date(year,0,1).getDay()) % 7));
+  const weekNum = 1 + Math.floor((thursday - firstThu) / (7*86400000));
+  return `${year}-W${weekNum.toString().padStart(2,'0')}`;
+}
+
+// Chu kỳ 3 tuần: mod0->[1,4,7], mod1->[3,6], mod2->[2,5]
+function computeAllowedDays(weekId, seedWeek='2025-W17') {
+  const [,cur]  = weekId.split('-W').map(Number);
+  const [,seed] = seedWeek.split('-W').map(Number);
+  const d = cur - seed;
+  if (d < 0) return [];
+  const m = d % 3;
+  if (m === 0) return ['mon','thu','sun'];
+  if (m === 1) return ['wed','sat'];
+  return ['tue','fri'];
+}
+
+// Hiển thị tuần và enable/disable checkbox
+async function renderVoteForm() {
+  const weekId = getCurrentWeekId();
+  // document.getElementById('weekDisplay').textContent = weekId;
+
+  const allowed = computeAllowedDays(weekId);
+  document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => {
+    const day = cb.dataset.day;
+    if (!allowed.includes(day)) {
+      cb.disabled = true;
+      cb.parentElement.style.opacity = '0.5';
+      cb.parentElement.style.textDecoration = 'line-through';
+    } else {
+      cb.disabled = false;
+      cb.parentElement.style.opacity = '';
+      cb.parentElement.style.textDecoration = '';
+    }
+    // reset trước khi load dữ liệu cũ
+    cb.checked = false;
+  });
+
+  // Load vote đã lưu (nếu có) và check lại
+  const user = auth.currentUser;
+  const ref = doc(db,'weeks', weekId, 'votes', user.uid);
+  const snap = await getDoc(ref);
+  if (snap.exists()) {
+    const days = snap.data().days; // { mon:true, tue:false, ... }
+    for (let [day, val] of Object.entries(days)) {
+      const input = document.querySelector(`.checkbox-group input[data-day="${day}"]`);
+      if (input && val) input.checked = true;
+    }
+  }
+}
+
+// Lưu vote lên Firestore
+async function saveVote(weekId, selectedDays) {
+  const u = auth.currentUser;
+  const ref = doc(db,'weeks', weekId, 'votes', u.uid);
+  const daysObj = { mon:false, tue:false, wed:false, thu:false, fri:false, sat:false, sun:false };
+  selectedDays.forEach(d => daysObj[d] = true);
+  await setDoc(ref, {
+    uid: u.uid,
+    week: weekId,
+    days: daysObj,
+    timestamp: serverTimestamp()
+  });
+}
+
+// Khi submit form
+function bindVoteSubmit() {
+  const form = document.getElementById('voteForm');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user) return alert('Bạn chưa đăng nhập!');
+
+    const weekId = getCurrentWeekId();
+    const selected = Array.from(
+      document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
+    ).map(cb => cb.dataset.day);
+
+    if (selected.length === 0) {
+      return alert('Vui lòng chọn ít nhất một ngày!');
+    }
+
+    try {
+      await saveVote(weekId, selected);
+      document.getElementById('voteStatus').textContent = 'Bình chọn đã được lưu!';
+    } catch (err) {
+      console.error(err);
+      alert('Lỗi khi lưu bình chọn.');
+    }
+  });
+}
+
+// Khởi khi auth thay đổi
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    handleLogout();
+  } else {
+    // Hiển thị form
+    document.getElementById('voteSection').style.display = 'block';
+    bindVoteSubmit();
+    await renderVoteForm();
+  }
+});
+
