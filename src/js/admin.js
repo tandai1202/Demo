@@ -235,14 +235,14 @@ function buildAllInOneTable(docs) {
     row.appendChild(totalCell);
 
     // Cột báo cáo
-    const reportCell = document.createElement('td');
-    const reportLink = document.createElement('a');
-    reportLink.href = `report.html?userId=${docId}`;
-    reportLink.className = 'report-link';
-    reportLink.innerHTML = '<i class="fas fa-chart-line"></i>';
-    reportLink.title = 'Xem báo cáo';
-    reportCell.appendChild(reportLink);
-    row.appendChild(reportCell);
+    // const reportCell = document.createElement('td');
+    // const reportLink = document.createElement('a');
+    // reportLink.href = `report.html?userId=${docId}`;
+    // reportLink.className = 'report-link';
+    // reportLink.innerHTML = '<i class="fas fa-chart-line"></i>';
+    // reportLink.title = 'Xem báo cáo';
+    // reportCell.appendChild(reportLink);
+    // row.appendChild(reportCell);
 
     tableBody.appendChild(row);
   });
@@ -291,10 +291,11 @@ function getSelectedWeekId() {
 
 // Xử lý đăng xuất
 document.getElementById('logoutBtn').addEventListener('click', async () => {
-  const result = await handleLogout();
-  if (result.success) {
-    window.location.href = 'index.html';
-  } else {
-    alert("Lỗi đăng xuất: " + result.error);
-  }
+  alert("!23")
+  // const result = await handleLogout();
+  // if (result.success) {
+  //   window.location.href = 'index.html';
+  // } else {
+  //   alert("Lỗi đăng xuất: " + result.error);
+  // }
 });

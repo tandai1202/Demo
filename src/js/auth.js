@@ -20,26 +20,31 @@ const db = getFirestore(app);
 
 // Xử lý đăng nhập
 export async function handleLogin(email, password) {
+  // 1. Thử đăng nhập qua Firebase Authentication (admin)
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    
-    // Lấy role trong Firestore
-    const docSnap = await getDoc(doc(db, 'users', user.uid));
-    if (!docSnap.exists()) {
-      throw new Error("Tài khoản chưa được thiết lập thông tin trong Firestore!");
+    const userCred = await signInWithEmailAndPassword(auth, email, password);
+    // Nếu signIn thành công, coi là admin
+    return { success: true, role: 'admin', uid: userCred.user.uid };
+  } catch (authError) {
+    // 2. Nếu không phải admin, thử kiểm tra user trong Firestore
+    try {
+      const usersRef = collection(db, 'users');
+      const q = query(
+        usersRef,
+        where('email', '==', email),
+        where('password', '==', password)
+      );
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        // Có bản ghi trùng khớp → coi là user
+        const doc = snapshot.docs[0];
+        return { success: true, role: 'user', uid: doc.id };
+      } else {
+        return { success: false, error: 'Email hoặc mật khẩu không đúng.' };
+      }
+    } catch (fsError) {
+      return { success: false, error: fsError.message };
     }
-
-    const userData = docSnap.data();
-    return {
-      success: true,
-      role: userData.role
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: error.message
-    };
   }
 }
 
