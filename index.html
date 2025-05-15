@@ -74,41 +74,6 @@
   <!-- Import modules -->
   <script type="module" src="./src/js/firebase-config.js"></script>
   <script type="module" src="./src/js/auth.js"></script>
-  <script type="module">
-    import { handleLogin } from './src/js/auth.js';
-
-    // Xử lý đăng nhập
-    const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      const result = await handleLogin(email, password);
-      
-      if (result.success) {
-        if (result.role === 'admin') {
-          window.location.href = 'admin.html';
-        } else {
-          window.location.href = 'user.html';
-        }
-      } else {
-        showError("Đăng nhập thất bại: " + result.error);
-      }
-    });
-
-    // Hiển thị lỗi với animation
-    function showError(message) {
-      const errorDiv = document.createElement('div');
-      errorDiv.className = 'error-message';
-      errorDiv.textContent = message;
-      document.querySelector('.login-card').appendChild(errorDiv);
-      
-      // Tự động ẩn sau 3 giây
-      setTimeout(() => {
-        errorDiv.remove();
-      }, 3000);
-    }
-  </script>
+  <script type="module" src="./src/js/login.js"></script>
 </body>
 </html>

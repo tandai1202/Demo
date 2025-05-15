@@ -51,6 +51,9 @@ onAuthStateChanged(auth, async (user) => {
 
     const userData = docSnap.data();
     currentUserRole = userData.role;
+    console.log(userData)
+    // ✅ Thêm dòng này để hiển thị họ tên
+    document.getElementById("userName").textContent = `Họ và tên: ${userData.name || 'Chưa có'}`;
 
     // Xử lý giao diện theo role
     if (currentUserRole === "admin") {
@@ -290,10 +293,16 @@ async function loadReportData() {
         const weekId = getWeekId(year, getWeekNumber(d));
         const data   = weeksCache[weekId];
         const key    = weekdayKeys[d.getDay()];
-        if (data && data.attendance[key] && data.confirmed[key]) {
+      
+        // safe extraction
+        const attendance = data?.attendance || {};
+        const confirmed  = data?.confirmed  || {};
+      
+        if (attendance[key] && confirmed[key]) {
           attended.push(`${d.getDate()}/${month}`);
         }
       });
+      
   
       // --- đếm và cộng vào tổng chung ---
       const count = attended.length;

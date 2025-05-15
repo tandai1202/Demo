@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Chiến sĩ - Dashboard Điểm Danh</title>
+    <link rel="stylesheet" href="./src/css/dashboard-admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header với banner 30/4 -->
+    <header class="dashboard-header">
+        <div class="anniversary-ribbon">
+            <div class="ribbon-content">
+                <span>KỶ NIỆM 50 NĂM NGÀY GIẢI PHÓNG MIỀN NAM 30/4 (1975-2025)</span>
+            </div>
+        </div>
+        
+        <nav class="dashboard-nav">
+            <div class="nav-brand">
+                <i class="fas fa-shield-alt military-icon"></i>
+                <h1>DASHBOARD ĐIỂM DANH QUÂN SỰ</h1>
+            </div>
+            <div class="nav-actions">
+                <div class="user-profile">
+                    <img src="./image/logo.webp" alt="Avatar" class="user-avatar">
+                    <span class="user-rank">Đội trưởng</span>
+                </div>
+                <button id="logoutBtn" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <ul class="sidebar-menu">
+                <li class="menu-item">
+                    <a href="dashboard-admin.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tổng quan</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="report-admin.html">
+                        <i class="fas fa-user-check"></i>
+                        <span>Thống kê</span>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="manage-soldiers.html">
+                        <i class="fas fa-users"></i>
+                        <span>Quản lý chiến sĩ</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Lịch trực</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="./schedule.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Chấm công</span>
+                    </a>
+                </li>
+                <li class="menu-item anniversary-item">
+                    <a href="#">
+                        <i class="fas fa-flag"></i>
+                        <span>Sự kiện 30/4</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="military-quote">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Quân đội nhân dân - Trung thành, dũng cảm, đoàn kết, quyết thắng"</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="dashboard-content">
+            <!-- Filter và tìm kiếm -->
+            <div class="filter-card">
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label for="searchSoldier"><i class="fas fa-search"></i> Tìm kiếm</label>
+                        <input type="text" id="searchSoldier" class="military-select" placeholder="Nhập tên, mã số...">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="unitFilter"><i class="fas fa-flag"></i> Đơn vị</label>
+                        <select id="unitFilter" class="military-select">
+                            <option value="">Tất cả đơn vị</option>
+                            <option value="unit1">Tiểu đoàn 1</option>
+                            <option value="unit2">Tiểu đoàn 2</option>
+                            <option value="unit3">Tiểu đoàn 3</option>
+                        </select>
+                    </div>
+                    
+                    <button class="filter-button military-button">
+                        <i class="fas fa-filter"></i> Lọc
+                    </button>
+                    
+                    <button id="addSoldierBtn" class="military-button" style="background-color: var(--military-secondary);">
+                        <i class="fas fa-user-plus"></i> Thêm chiến sĩ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Danh sách chiến sĩ -->
+            <div class="data-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Danh sách chiến sĩ</h2>
+                    <div class="section-actions">
+                        <button class="export-button military-button">
+                            <i class="fas fa-file-export"></i> Xuất danh sách
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table class="military-table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th><i class="fas fa-id-card"></i> Chiến sĩ</th>
+                                <th><i class="fas fa-flag"></i> Đơn vị</th>
+                                <th><i class="fas fa-envelope"></i> Tài khoản</th>
+                                <th><i class="fas fa-calendar-alt"></i> Ngày tham gia</th>
+                                <th><i class="fas fa-cog"></i> Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <div class="soldier-info">
+                                        <img src="./image/logo.webp" alt="CS1" class="soldier-avatar">
+                                        <span>Nguyễn Văn A</span>
+                                    </div>
+                                </td>
+                                <td>Binh nhất</td>
+                                <td>Tiểu đoàn 1</td>
+                                <td>nguyenvana@example.com</td>
+                                <td>15/03/2023</td>
+                                <td>
+                                    <button class="action-button edit-button"><i class="fas fa-edit"></i></button>
+                                    <button class="action-button delete-button"><i class="fas fa-trash-alt"></i></button>
+                                    <button class="action-button reset-button"><i class="fas fa-key"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>
+                                    <div class="soldier-info">
+                                        <img src="./image/logo.webp" alt="CS2" class="soldier-avatar">
+                                        <span>Trần Thị B</span>
+                                    </div>
+                                </td>
+                                <td>Binh nhì</td>
+                                <td>Tiểu đoàn 2</td>
+                                <td>tranthib@example.com</td>
+                                <td>20/04/2023</td>
+                                <td>
+                                    <button class="action-button edit-button"><i class="fas fa-edit"></i></button>
+                                    <button class="action-button delete-button"><i class="fas fa-trash-alt"></i></button>
+                                    <button class="action-button reset-button"><i class="fas fa-key"></i></button>
+                                </td>
+                            </tr>
+                            <!-- Thêm các hàng khác tương tự -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="table-footer">
+                    <div class="pagination-controls">
+                        <button class="pagination-button"><i class="fas fa-chevron-left"></i></button>
+                        <span class="page-number">1 / 3</span>
+                        <button class="pagination-button"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal thêm/sửa chiến sĩ -->
+    <div id="soldierModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> <span id="modalTitle">Thêm chiến sĩ mới</span></h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="soldierForm">
+                    <div class="form-group">
+                        <label for="soldierName">Họ và tên</label>
+                        <input type="text" id="soldierName" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="soldierUnit">Đơn vị</label>
+                            <select id="soldierUnit" required>
+                                <option value="">Chọn đơn vị</option>
+                                <option value="unit1">Tiểu đoàn 1</option>
+                                <option value="unit2">Tiểu đoàn 2</option>
+                                <option value="unit3">Tiểu đoàn 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="soldierEmail">Tài khoản (Email)</label>
+                            <input type="email" id="soldierEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="soldierPassword">Mật khẩu</label>
+                            <input type="password" id="soldierPassword" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="soldierAvatar">Ảnh đại diện</label>
+                        <input type="file" id="soldierAvatar" accept="image/*">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="modal-button cancel-button">Hủy bỏ</button>
+                        <button type="submit" class="modal-button save-button">Lưu lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+        import { getFirestore }  from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+        // … và các import khác nếu cần
+      </script>
+      <!-- Cấu hình Firebase & export db -->
+      <script type="module" src="./src/js/firebase-config.js"></script>
+
+    <script type="module" src="./src/js/manage-soldiers.js"></script>
+</body>
+</html>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Điểm Danh - Kỷ niệm 30/4</title>
-    <link rel="stylesheet" href="./src/css/report-admin.css">
+    <title>Thống kê Điểm Danh - Kỷ niệm 30/4</title>
+    <link rel="stylesheet" href="./src/css/dashboard-admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css" rel="stylesheet">
@@ -14,16 +14,14 @@
     <header class="dashboard-header">
         <div class="anniversary-ribbon">
             <div class="ribbon-content">
-                <!-- <img src="./image/logo.webp" alt="Cờ" class="flag-icon"> -->
                 <span>KỶ NIỆM 50 NĂM NGÀY GIẢI PHÓNG MIỀN NAM 30/4 (1975-2025)</span>
-                <!-- <img src="./image/" alt="Huy hiệu" class="badge-icon"> -->
             </div>
         </div>
         
         <nav class="dashboard-nav">
             <div class="nav-brand">
                 <i class="fas fa-shield-alt military-icon"></i>
-                <h1>DASHBOARD ĐIỂM DANH QUÂN SỰ</h1>
+                <h1>DASHBOARD THỐNG KÊ ĐIỂM DANH</h1>
             </div>
             <div class="nav-actions">
                 <div class="user-profile">
@@ -41,16 +39,16 @@
         <!-- Sidebar -->
         <aside class="dashboard-sidebar">
             <ul class="sidebar-menu">
-                <li class="menu-item active">
-                    <a href="report-admin.html">
+                <li class="menu-item">
+                    <a href="dashboard-admin.html">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Tổng quan</span>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="#">
+                <li class="menu-item active">
+                    <a href="report-admin.html">
                         <i class="fas fa-user-check"></i>
-                        <span>Điểm danh</span>
+                        <span>Thống kê</span>
                     </a>
                 </li>
                 <li class="menu-item">
@@ -60,15 +58,15 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="./schedule.html">
+                    <a href="#">
                         <i class="fas fa-calendar-alt"></i>
                         <span>Lịch trực</span>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="schedule.html">
+                    <a href="./schedule.html">
                         <i class="fas fa-file-alt"></i>
-                        <span>Báo cáo</span>
+                        <span>Chấm công</span>
                     </a>
                 </li>
                 <li class="menu-item anniversary-item">
@@ -92,24 +90,30 @@
             <!-- Filter card -->
             <div class="filter-card">
                 <div class="filter-section">
-                    <div class="filter-group">
-                        <label for="unitSelect"><i class="fas fa-flag"></i> Đơn vị</label>
-                        <select id="unitSelect" class="military-select">
-                            <option value="">Tất cả đơn vị</option>
-                            <option value="unit1">Tiểu đoàn 1</option>
-                            <option value="unit2">Tiểu đoàn 2</option>
+                    <div class="select-group">
+                        <label for="monthSelect"><i class="fas fa-calendar-alt"></i> Tháng</label>
+                        <select id="monthSelect" class="date-select military-select">
+                            <option value="">Chọn tháng</option>
                         </select>
                     </div>
                     
-                    <div class="filter-group">
-                        <label for="timeSelect"><i class="fas fa-calendar"></i> Thời gian</label>
-                        <select id="timeSelect" class="military-select">
-                            <option value="month">Tháng này</option>
-                            <option value="week">Tuần này</option>
-                            <option value="year">Năm 2024</option>
-                            <option value="custom">Tùy chọn</option>
+                    <div class="select-group">
+                        <label for="yearSelect"><i class="fas fa-calendar"></i> Năm</label>
+                        <select id="yearSelect" class="date-select military-select">
+                            <option value="">Chọn năm</option>
+                            <!-- <option value="2024">2024 - Kỷ niệm 49 năm</option> -->
                         </select>
                     </div>
+                    
+                    <!-- <div class="filter-group" id="customDateRange" style="display: none;">
+                        <label for="startDate"><i class="fas fa-calendar-day"></i> Từ ngày</label>
+                        <input type="date" id="startDate" class="military-select">
+                    </div>
+                    
+                    <div class="filter-group" id="customDateRangeEnd" style="display: none;">
+                        <label for="endDate"><i class="fas fa-calendar-day"></i> Đến ngày</label>
+                        <input type="date" id="endDate" class="military-select">
+                    </div> -->
                     
                     <button class="filter-button military-button">
                         <i class="fas fa-filter"></i> Lọc
@@ -117,38 +121,38 @@
                 </div>
             </div>
 
-            <!-- Stats cards -->
-            <div class="stats-grid">
+            <!-- Summary stats -->
+            <!-- <div class="stats-grid">
                 <div class="stat-card red-theme">
                     <div class="stat-icon">
-                        <i class="fas fa-user-check"></i>
+                        <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>Tổng lượt điểm danh</h3>
-                        <p class="stat-value">1,248</p>
-                        <p class="stat-change"><i class="fas fa-arrow-up"></i> 12% so tháng trước</p>
+                        <h3>Tổng số chiến sĩ</h3>
+                        <p class="stat-value">86</p>
+                        <p class="stat-change"><i class="fas fa-arrow-up"></i> 5% so tháng trước</p>
                     </div>
                 </div>
                 
                 <div class="stat-card green-theme">
                     <div class="stat-icon">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-user-check"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>Chiến sĩ trực</h3>
-                        <p class="stat-value">48</p>
-                        <p class="stat-change"><i class="fas fa-arrow-up"></i> 3% so tháng trước</p>
+                        <h3>Đã điểm danh</h3>
+                        <p class="stat-value">78</p>
+                        <p class="stat-change"><i class="fas fa-arrow-up"></i> 90.7% hoàn thành</p>
                     </div>
                 </div>
                 
                 <div class="stat-card blue-theme">
                     <div class="stat-icon">
-                        <i class="fas fa-calendar-check"></i>
+                        <i class="fas fa-calendar-times"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>Ngày trực TB/chiến sĩ</h3>
-                        <p class="stat-value">6.2</p>
-                        <p class="stat-change"><i class="fas fa-arrow-down"></i> 0.5% so tháng trước</p>
+                        <h3>Vắng mặt</h3>
+                        <p class="stat-value">8</p>
+                        <p class="stat-change"><i class="fas fa-arrow-down"></i> 9.3% tổng số</p>
                     </div>
                 </div>
                 
@@ -158,42 +162,16 @@
                     </div>
                     <div class="stat-info">
                         <h3>Hoàn thành chỉ tiêu</h3>
-                        <p class="stat-value">92%</p>
+                        <p class="stat-value">94%</p>
                         <p class="stat-change anniversary-highlight">Đạt mục tiêu 30/4</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Charts row -->
-            <div class="charts-row">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3><i class="fas fa-chart-line"></i> Xu hướng điểm danh</h3>
-                        <div class="chart-actions">
-                            <button class="chart-button active">Tuần</button>
-                            <button class="chart-button">Tháng</button>
-                            <button class="chart-button">Năm</button>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="attendanceTrendChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3><i class="fas fa-chart-pie"></i> Phân bổ theo đơn vị</h3>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="unitDistributionChart"></canvas>
-                    </div>
-                </div>
-            </div>
+            </div> -->
 
             <!-- Data tables -->
             <div class="data-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-table"></i> Báo cáo chi tiết</h2>
+                    <h2><i class="fas fa-table"></i> Báo cáo thống kê điểm danh</h2>
                     <div class="section-actions">
                         <button class="export-button military-button">
                             <i class="fas fa-file-export"></i> Xuất báo cáo
@@ -208,9 +186,9 @@
                                 <th><i class="fas fa-id-card"></i> Chiến sĩ</th>
                                 <th><i class="fas fa-flag"></i> Đơn vị</th>
                                 <th><i class="fas fa-calendar-day"></i> Ngày trực</th>
-                                <th><i class="fas fa-hashtag"></i> Tổng ngày</th>
+                                <th><i class="fas fa-hashtag"></i> Số ngày</th>
                                 <th><i class="fas fa-percentage"></i> Tỷ lệ</th>
-                                <th><i class="fas fa-medal"></i> Đánh giá</th>
+                                <th><i class="fas fa-medal"></i> Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -226,8 +204,44 @@
                                 <td>5</td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 83%"></div>
-                                        <span>83%</span>
+                                        <div class="progress-fill" style="width: 100%"></div>
+                                        <span>100%</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge excellent">Hoàn thành</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="soldier-info">
+                                        <img src="" alt="CS2" class="soldier-avatar">
+                                        <span>Trần Thị B</span>
+                                    </div>
+                                </td>
+                                <td>Tiểu đoàn 2</td>
+                                <td>3,5,7/4</td>
+                                <td>3</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 60%"></div>
+                                        <span>60%</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge warning">Chưa đạt</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="soldier-info">
+                                        <img src="" alt="CS3" class="soldier-avatar">
+                                        <span>Lê Văn C</span>
+                                    </div>
+                                </td>
+                                <td>Tiểu đoàn 1</td>
+                                <td>1,2,3,4,5,6,7/4</td>
+                                <td>7</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 100%"></div>
+                                        <span>100%</span>
                                     </div>
                                 </td>
                                 <td><span class="badge excellent">Xuất sắc</span></td>
@@ -242,6 +256,27 @@
                         <button class="pagination-button"><i class="fas fa-chevron-left"></i></button>
                         <span class="page-number">1 / 5</span>
                         <button class="pagination-button"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts row -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-bar"></i> Thống kê điểm danh theo đơn vị</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="attendanceByUnitChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-pie"></i> Tỷ lệ hoàn thành</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="completionRateChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -278,6 +313,88 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <script type="module" src="report.js"></script>
+    <script>
+        // Xử lý hiển thị phần chọn ngày tùy chỉnh
+        document.getElementById('timeRange').addEventListener('change', function() {
+            const customDateRange = document.getElementById('customDateRange');
+            const customDateRangeEnd = document.getElementById('customDateRangeEnd');
+            
+            if (this.value === 'custom') {
+                customDateRange.style.display = 'block';
+                customDateRangeEnd.style.display = 'block';
+            } else {
+                customDateRange.style.display = 'none';
+                customDateRangeEnd.style.display = 'none';
+            }
+        });
+
+        // Khởi tạo biểu đồ
+        document.addEventListener('DOMContentLoaded', function() {
+            // Biểu đồ thống kê theo đơn vị
+            const unitCtx = document.getElementById('attendanceByUnitChart').getContext('2d');
+            const unitChart = new Chart(unitCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Tiểu đoàn 1', 'Tiểu đoàn 2', 'Tiểu đoàn 3'],
+                    datasets: [{
+                        label: 'Số lần điểm danh',
+                        data: [45, 32, 28],
+                        backgroundColor: [
+                            'rgba(42, 92, 69, 0.7)',
+                            'rgba(58, 125, 93, 0.7)',
+                            'rgba(30, 58, 40, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(42, 92, 69, 1)',
+                            'rgba(58, 125, 93, 1)',
+                            'rgba(30, 58, 40, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Biểu đồ tỷ lệ hoàn thành
+            const rateCtx = document.getElementById('completionRateChart').getContext('2d');
+            const rateChart = new Chart(rateCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Hoàn thành', 'Chưa hoàn thành', 'Vắng mặt'],
+                    datasets: [{
+                        data: [78, 5, 3],
+                        backgroundColor: [
+                            'rgba(58, 125, 93, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(209, 0, 0, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(58, 125, 93, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(209, 0, 0, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
