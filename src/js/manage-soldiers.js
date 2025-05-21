@@ -15,14 +15,21 @@ import {
   query,
   where,
   getDocs,
-  serverTimestamp
+  serverTimestamp,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+import {
+  getFunctions,
+  httpsCallable
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-functions.js";
 
 import { app } from "./firebase-config.js";
 import { handleLogout } from "./auth.js";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+const functions = getFunctions(app);
 
 document.addEventListener('DOMContentLoaded', () => {
   const soldiersCol = collection(db, 'users');
@@ -75,11 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('soldierPassword').value;
 
     try {
-      // Tạo tài khoản trong Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Lưu vào Firestore
       await setDoc(doc(db, 'users', user.uid), {
         name,
         unit,
@@ -120,13 +125,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Giả lập nút xóa
-  document.addEventListener('click', e => {
+  // Nút xóa người dùng
+  document.addEventListener('click', async e => {
     if (e.target.closest('.delete-button')) {
+      const id = e.target.closest('.delete-button').dataset.id;
       if (confirm('Bạn có chắc chắn muốn xóa chiến sĩ này?')) {
-        const row = e.target.closest('tr');
-        row.remove(); // Gỡ khỏi bảng, chưa xóa thật từ Firestore
-        alert('Đã xóa chiến sĩ thành công!');
+        try {
+          const deleteUserById = httpsCallable(functions, "deleteUserById");
+          await deleteUserById({ uid: id });
+          alert('Đã xóa chiến sĩ khỏi hệ thống!');
+        } catch (error) {
+          console.error('Lỗi khi xóa chiến sĩ:', error);
+          alert('Không thể xóa chiến sĩ. Vui lòng thử lại.');
+        }
       }
     }
   });

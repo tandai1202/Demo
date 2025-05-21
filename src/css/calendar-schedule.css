@@ -1,0 +1,788 @@
+/* Dashboard Variables */
+:root {
+    --military-dark: #1e3a28;
+    --military-primary: #2a5c45;
+    --military-secondary: #3a7d5d;
+    --military-light: #e9f5ef;
+    --military-red: #d10000;
+    --military-gold: #ffd700;
+    --military-gray: #6c757d;
+    --sidebar-width: 250px;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.anniversary-ribbon {
+    background-color: var(--military-red);
+    color: white;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.ribbon-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-nav {
+    background-color: var(--military-primary);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-brand h1 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.military-icon {
+    font-size: 24px;
+    color: var(--military-gold);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--military-gold);
+}
+
+.user-rank {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logout-button:hover {
+    color: var(--military-gold);
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+    display: flex;
+    margin-top: 106px;
+    min-height: calc(100vh - 90px);
+}
+
+.dashboard-sidebar {
+    width: var(--sidebar-width);
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    transition: all 0.3s;
+}
+
+.menu-item a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--military-gray);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.menu-item i {
+    width: 20px;
+    text-align: center;
+}
+
+.menu-item:hover {
+    background-color: var(--military-light);
+}
+
+.menu-item:hover a {
+    color: var(--military-primary);
+}
+
+.menu-item.active {
+    background-color: var(--military-light);
+    border-left: 4px solid var(--military-primary);
+}
+
+.menu-item.active a {
+    color: var(--military-primary);
+}
+
+.anniversary-item a {
+    color: var(--military-red) !important;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.military-quote {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--military-gray);
+    text-align: center;
+}
+
+.military-quote i {
+    color: var(--military-primary);
+    margin: 0 5px;
+}
+
+.dashboard-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+/* Filter Card */
+.filter-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+}
+
+.filter-section {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--military-primary);
+}
+
+.military-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    color: #333;
+}
+
+.military-select:focus {
+    outline: none;
+    border-color: var(--military-primary);
+    box-shadow: 0 0 0 2px rgba(42, 92, 69, 0.2);
+}
+
+.filter-button {
+    padding: 8px 20px;
+    margin-bottom: 3px;
+}
+
+/* Buttons */
+.military-button {
+    background-color: var(--military-primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.military-button:hover {
+    background-color: var(--military-dark);
+    transform: translateY(-2px);
+}
+
+.export-button {
+    background-color: white;
+    color: var(--military-primary);
+    border: 1px solid var(--military-primary);
+}
+
+.export-button:hover {
+    background-color: var(--military-light);
+}
+
+/* Calendar Styles */
+.calendar-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--military-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-button {
+    background: none;
+    border: 1px solid #ddd;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.nav-button:hover {
+    background-color: var(--military-light);
+    border-color: var(--military-primary);
+}
+
+.month-indicator {
+    font-weight: 500;
+    padding: 0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background-color: #eee;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.day-header {
+    background-color: var(--military-primary);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.day-cell {
+    background-color: white;
+    min-height: 100px;
+    padding: 10px;
+    position: relative;
+}
+
+.day-cell.disabled {
+    background-color: #f8f9fa;
+    color: #ccc;
+}
+
+.day-cell:hover {
+    background-color: var(--military-light);
+    cursor: pointer;
+}
+
+.day-number {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.day-content {
+    font-size: 12px;
+}
+
+.duty-pill {
+    background-color: var(--military-secondary);
+    color: white;
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-size: 11px;
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
+.today {
+    background-color: var(--military-light);
+    border: 2px solid var(--military-primary);
+}
+
+.special-day {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.special-day .day-number {
+    color: var(--military-red);
+}
+
+/* Schedule Form Styles */
+.schedule-form-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.form-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--military-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--military-primary);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--military-primary);
+    box-shadow: 0 0 0 2px rgba(42, 92, 69, 0.2);
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.submit-button {
+    background-color: var(--military-secondary);
+}
+
+.cancel-button {
+    background-color: white;
+    color: var(--military-gray);
+    border: 1px solid #ddd;
+}
+
+/* Schedule List Styles */
+.schedule-list-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.list-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--military-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.schedule-table th {
+    background-color: var(--military-primary);
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.schedule-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-table tr:hover {
+    background-color: var(--military-light);
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-approved {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.action-button {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.edit-button {
+    background-color: var(--military-light);
+    color: var(--military-primary);
+    border: 1px solid var(--military-primary);
+}
+
+.delete-button {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #721c24;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    animation: modalOpen 0.4s;
+}
+
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--military-primary);
+    margin: 0;
+}
+
+.close {
+    color: var(--military-gray);
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--military-primary);
+}
+
+/* Anniversary Section */
+.anniversary-section {
+    margin-top: 30px;
+}
+
+.anniversary-card {
+    display: flex;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+}
+
+.anniversary-image {
+    flex: 0 0 200px;
+    background-color: var(--military-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.anniversary-image img {
+    width: 100%;
+    height: auto;
+}
+
+.anniversary-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.anniversary-content h3 {
+    margin-top: 0;
+    color: var(--military-red);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.anniversary-content p {
+    font-style: italic;
+    color: var(--military-primary);
+    margin-bottom: 20px;
+}
+
+.countdown-timer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.countdown-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--military-red);
+    background-color: #ffebee;
+    padding: 5px 15px;
+    border-radius: 4px;
+}
+
+.countdown-label {
+    font-size: 12px;
+    color: var(--military-gray);
+    margin-top: 5px;
+}
+
+.countdown-separator {
+    font-size: 20px;
+    color: var(--military-primary);
+    margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-content {
+        margin-left: 0;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .anniversary-card {
+        flex-direction: column;
+    }
+
+    .anniversary-image {
+        flex: 0 0 auto;
+        height: 120px;
+    }
+
+    .calendar-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .day-header:not(:first-child) {
+        display: none;
+    }
+
+    .day-cell {
+        display: flex;
+        align-items: center;
+        min-height: auto;
+    }
+
+    .day-number {
+        margin-right: 10px;
+        margin-bottom: 0;
+        min-width: 20px;
+    }
+
+    .duty-pill {
+        padding: 2px 6px;
+        border-radius: 12px;
+        display: inline-block;
+        margin: 2px 0;
+        font-size: 12px;
+    }
+
+    .pill-vote {
+        background-color: #ffcc00;
+        color: #333;
+    }
+
+    .pill-attended {
+        background-color: #3a7d5d;
+        color: #fff;
+    }
+
+    .pill-icon {
+        margin-right: 4px;
+    }
+}

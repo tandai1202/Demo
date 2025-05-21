@@ -71,7 +71,6 @@ async function loadMyVotes() {
   if (!user) return;
 
   const weekId = getCurrentWeekId();
-  console.log(weekId)
   const voteDoc = await getDoc(doc(db, 'weeks', weekId, 'votes', user.uid));
 
   // Lấy ngày bắt đầu tuần hiện tại và hiển thị
@@ -114,6 +113,17 @@ async function loadMyVotes() {
         }
       }
     }
+
+    if (voteDoc.exists()) {
+      const data = voteDoc.data();const note = data.note || "";
+      const noteDisplay = document.getElementById('noteContent');
+      if (noteDisplay) {
+        noteDisplay.textContent = note.trim() ? note : "Không có ghi chú.";
+      }
+    }
+
+    const note = voteDoc.data().note || "";
+    document.getElementById('noteGhichu') && (document.getElementById('noteGhichu').innerHTML += note);
 
     // Hiển thị trạng thái chấm công
     for (const [day, value] of Object.entries(attendance)) { 
@@ -201,7 +211,7 @@ function getCurrentWeekId() {
 }
 
 // Chu kỳ 3 tuần: mod0->[1,4,7], mod1->[3,6], mod2->[2,5]
-function computeAllowedDays(weekId, seedWeek='2025-W17') {
+function computeAllowedDays(weekId, seedWeek='2025-W19') {
   const [,cur]  = weekId.split('-W').map(Number);
   const [,seed] = seedWeek.split('-W').map(Number);
   const d = cur - seed;
@@ -260,14 +270,21 @@ async function saveVote(weekId, selectedDays) {
     if (daysObj.hasOwnProperty(d)) daysObj[d] = true;
   });
 
+  const note = document.getElementById('note')?.value || "";
+
   try {
     const userDoc = await getDoc(doc(db, 'users', u.uid));
+    console.log(userDoc.data())
     const userEmail = userDoc.exists() ? userDoc.data().email : "Unknown";
+    const name = userDoc.exists() ? userDoc.data().name : "Ẩn danh";
+
 
     await setDoc(voteRef, {
+      name: name,
       userEmail: userEmail,
       days: daysObj,
       votedAt: serverTimestamp(),
+      note: note,
       attendance: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false },
       confirmed: {
         mon: false, tue: false, wed: false,

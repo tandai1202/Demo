@@ -53,7 +53,7 @@ import {
       // Lưu thông tin user + role vào Firestore
       await setDoc(doc(db, 'users', user.uid), {
         email: email,
-        role: 'user',
+        role: 'admin',
         password: password
       });
   

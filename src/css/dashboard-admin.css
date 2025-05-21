@@ -959,3 +959,182 @@ body {
         width: calc(100% - 30px);
     }
 }
+
+/* Thêm vào dashboard-admin.css */
+
+/* Calendar */
+.calendar-grid {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-navigation {
+    display: flex;
+    gap: 10px;
+}
+
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-cell {
+    padding: 10px;
+    text-align: center;
+    font-weight: 500;
+    background-color: var(--military-light);
+    border-radius: 4px;
+}
+
+.calendar-day {
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    position: relative;
+}
+
+.calendar-day.inactive {
+    background-color: #f8f9fa;
+    color: var(--military-gray);
+}
+
+.shift-marker {
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-top: 5px;
+    display: block;
+}
+
+.shift-marker.morning {
+    background-color: #e3f2fd;
+    color: #2a5c9d;
+}
+
+.shift-marker.night {
+    background-color: #1e3a28;
+    color: white;
+}
+
+/* Badge variants */
+.badge.morning {
+    background-color: #e3f2fd;
+    color: #2a5c9d;
+}
+
+.badge.night {
+    background-color: var(--military-dark);
+    color: white;
+}
+
+.badge.completed {
+    background-color: #e8f5e9;
+    color: var(--military-secondary);
+}
+
+
+.note-section {
+  margin-bottom: 30px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.note-title {
+  font-size: 1.2rem;
+  color: var(--military-primary);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.note-cell {
+  font-style: italic;
+  color: var(--military-dark);
+  white-space: pre-wrap;
+  max-width: 400px;
+  font-weight: 700;
+}
+td {
+  vertical-align: top;
+}
+
+td:last-child {
+  color: var(--military-gray);
+  font-size: 0.9rem;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.month-select {
+  padding: 6px 12px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 150px;
+}
+
+.calendar-note-preview {
+  margin-top: 30px;
+}
+
+.calendar-note-preview .calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-top: 15px;
+}
+
+.calendar-day-preview {
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 10px;
+  min-height: 80px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.calendar-day-preview strong {
+  display: block;
+  color: var(--military-primary);
+  margin-bottom: 5px;
+}
+
+.note-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.note-controls .filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+#exportExcelBtn {
+  white-space: nowrap;
+}

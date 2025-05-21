@@ -1,0 +1,128 @@
+<!-- Tạo file schedule.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <!-- Giữ nguyên phần head như dashboard -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Trực - Quân đội</title>
+    <link rel="stylesheet" href="./src/css/dashboard-admin.css">
+    <!-- Các link CSS khác giữ nguyên -->
+</head>
+<body>
+    <!-- Giữ nguyên header -->
+    <header class="dashboard-header">
+        <!-- ... -->
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Giữ nguyên sidebar -->
+        <aside class="dashboard-sidebar">
+            <!-- ... -->
+        </aside>
+
+        <!-- Main content -->
+        <main class="dashboard-content">
+            <!-- Calendar controls -->
+            <div class="filter-card">
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label for="monthSelect"><i class="fas fa-calendar-alt"></i> Chọn tháng</label>
+                        <input type="month" id="monthSelect" class="military-select" value="2024-04">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="unitSelect"><i class="fas fa-flag"></i> Đơn vị</label>
+                        <select id="unitSelect" class="military-select">
+                            <option value="all">Tất cả đơn vị</option>
+                            <option value="unit1">Tiểu đoàn 1</option>
+                            <option value="unit2">Tiểu đoàn 2</option>
+                        </select>
+                    </div>
+                    
+                    <button class="military-button">
+                        <i class="fas fa-sync-alt"></i> Tải lại
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calendar grid -->
+            <div class="calendar-grid">
+                <div class="calendar-header">
+                    <h2><i class="fas fa-calendar-alt"></i> Lịch trực tháng 4/2024</h2>
+                    <div class="calendar-navigation">
+                        <button class="military-button"><i class="fas fa-chevron-left"></i></button>
+                        <button class="military-button"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                
+                <div class="calendar-body">
+                    <div class="calendar-weekdays">
+                        <div class="calendar-cell">CN</div>
+                        <div class="calendar-cell">T2</div>
+                        <div class="calendar-cell">T3</div>
+                        <div class="calendar-cell">T4</div>
+                        <div class="calendar-cell">T5</div>
+                        <div class="calendar-cell">T6</div>
+                        <div class="calendar-cell">T7</div>
+                    </div>
+                    
+                    <div class="calendar-days">
+                        <!-- Ví dụ 1 tuần -->
+                        <div class="calendar-day inactive">31</div>
+                        <div class="calendar-day">
+                            1
+                            <div class="shift-marker morning">Trực sáng</div>
+                            <div class="shift-marker night">Trực đêm</div>
+                        </div>
+                        <div class="calendar-day">2</div>
+                        <!-- Thêm các ngày khác -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shift details -->
+            <div class="data-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list-alt"></i> Chi tiết ca trực</h2>
+                    <button class="military-button">
+                        <i class="fas fa-plus"></i> Thêm ca trực
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="military-table">
+                        <thead>
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Ca trực</th>
+                                <th>Đơn vị</th>
+                                <th>Chỉ huy</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01/04/2024</td>
+                                <td><span class="badge morning">Sáng (6h-12h)</span></td>
+                                <td>Tiểu đoàn 1</td>
+                                <td>Nguyễn Văn A</td>
+                                <td><span class="badge completed">Hoàn thành</span></td>
+                                <td>
+                                    <button class="action-button edit-button">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Thêm các hàng khác -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Giữ nguyên phần script -->
+</body>
+</html>
