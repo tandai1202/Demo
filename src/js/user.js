@@ -258,8 +258,8 @@ async function renderVoteForm() {
 
 // Lưu vote lên Firestore
 async function saveVote(weekId, selectedDays) {
-  const u = auth.currentUser; // current logged-in user
-  const voteRef = doc(db, 'weeks', weekId, 'votes', u.uid); // bạn đặt tên là ref, nhưng lại dùng voteRef trong setDoc
+  const u = auth.currentUser;
+  const voteRef = doc(db, 'weeks', weekId, 'votes', u.uid);
 
   const daysObj = {
     mon: false, tue: false, wed: false,
@@ -270,14 +270,12 @@ async function saveVote(weekId, selectedDays) {
     if (daysObj.hasOwnProperty(d)) daysObj[d] = true;
   });
 
-  const note = document.getElementById('note')?.value || "";
+  const note = document.getElementById('note')?.value.trim() || "";
 
   try {
     const userDoc = await getDoc(doc(db, 'users', u.uid));
-    console.log(userDoc.data())
     const userEmail = userDoc.exists() ? userDoc.data().email : "Unknown";
     const name = userDoc.exists() ? userDoc.data().name : "Ẩn danh";
-
 
     await setDoc(voteRef, {
       name: name,
@@ -292,24 +290,14 @@ async function saveVote(weekId, selectedDays) {
       }
     });
 
-    // await setDoc(voteRef, {
-    //   userEmail: userEmail,
-    //   days: newDaysObj,
-    //   votedAt: serverTimestamp(),
-    //   attendance: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false },
-    //   confirmed: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false }
-    // });
-
     document.getElementById('voteStatus').textContent = "Gửi bình chọn thành công!";
-    loadMyVotes?.(); // Nếu hàm này tồn tại
+    loadMyVotes?.();
   } catch (err) {
     console.error(err);
     document.getElementById('voteStatus').textContent = "Lỗi khi gửi bình chọn!";
   }
 }
 
-
-// Khi submit form
 function bindVoteSubmit() {
   const form = document.getElementById('voteForm');
   form.addEventListener('submit', async e => {
@@ -322,19 +310,24 @@ function bindVoteSubmit() {
       document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
     ).map(cb => cb.dataset.day);
 
-    if (selected.length === 0) {
-      return alert('Vui lòng chọn ít nhất một ngày!');
+    const note = document.getElementById('note')?.value.trim() || "";
+
+    // Nếu không chọn ngày và cũng không ghi chú -> cảnh báo
+    if (selected.length === 0 && note === "") {
+      return alert('Vui lòng chọn ít nhất một ngày hoặc ghi chú lý do!');
     }
 
     try {
       await saveVote(weekId, selected);
       document.getElementById('voteStatus').textContent = 'Bình chọn đã được lưu!';
+      document.getElementById('note').value = ""
     } catch (err) {
       console.error(err);
       alert('Lỗi khi lưu bình chọn.');
     }
   });
 }
+
 
 // Khởi khi auth thay đổi
 onAuthStateChanged(auth, async user => {
