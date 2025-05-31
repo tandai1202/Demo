@@ -91,7 +91,6 @@ function renderNoteTable(data) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${name}</td>
-      <td>${email}</td>
       <td class="note-cell">${note}</td>
       <td>${dateFormatted}</td>
     `;

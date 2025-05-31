@@ -55,7 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td>${data.unit}</td>
         <td>${data.email}</td>
-        <td>${data.joinDate?.toDate().toLocaleDateString('vi-VN') || ''}</td>
+        <td>${data.password || '  '}</td>
+        <td>${data.phone || 'Chưa có'}</td>
+        <td>${data.job || 'Chưa có'}</td>
+        <td>${data.joinDate?.toDate().toLocaleDateString('vi-VN') || 'Chưa có'}</td>
         <td>
           <button class="action-button edit-button" data-id="${doc.id}"><i class="fas fa-edit"></i></button>
           <button class="action-button delete-button" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
@@ -80,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const unit = document.getElementById('soldierUnit').value;
     const email = document.getElementById('soldierEmail').value;
     const password = document.getElementById('soldierPassword').value;
+    const phone = document.getElementById('soldierPhone').value;
+    const job = document.getElementById('soldierJob').value;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -90,6 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
         unit,
         email,
         avatarURL: null,
+        password, // nếu bạn muốn lưu (cân nhắc không nên lưu plaintext)
+        phone,
+        job,
         role: "user",
         joinDate: serverTimestamp()
       });
