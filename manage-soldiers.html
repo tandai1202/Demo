@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
     <!-- Header với banner 30/4 -->
     <header class="dashboard-header">
@@ -16,7 +18,7 @@
                 <span>KỶ NIỆM 50 NĂM NGÀY GIẢI PHÓNG MIỀN NAM 30/4 (1975-2025)</span>
             </div>
         </div>
-        
+
         <nav class="dashboard-nav">
             <div class="nav-brand">
                 <i class="fas fa-shield-alt military-icon"></i>
@@ -38,7 +40,7 @@
         <!-- Sidebar -->
         <aside class="dashboard-sidebar">
             <ul class="sidebar-menu">
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="dashboard-admin.html">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Tổng quan</span>
@@ -50,7 +52,7 @@
                         <span>Thống kê</span>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="manage-soldiers.html">
                         <i class="fas fa-users"></i>
                         <span>Quản lý chiến sĩ</span>
@@ -75,7 +77,7 @@
                     </a>
                 </li>
             </ul>
-            
+
             <div class="sidebar-footer">
                 <div class="military-quote">
                     <i class="fas fa-quote-left"></i>
@@ -93,7 +95,7 @@
                         <label for="searchSoldier"><i class="fas fa-search"></i> Tìm kiếm</label>
                         <input type="text" id="searchSoldier" class="military-select" placeholder="Nhập tên, mã số...">
                     </div>
-                    
+
                     <div class="filter-group">
                         <label for="unitFilter"><i class="fas fa-flag"></i> Đơn vị</label>
                         <select id="unitFilter" class="military-select">
@@ -103,12 +105,13 @@
                             <option value="unit3">Tiểu đoàn 3</option>
                         </select>
                     </div>
-                    
+
                     <button class="filter-button military-button">
                         <i class="fas fa-filter"></i> Lọc
                     </button>
-                    
-                    <button id="addSoldierBtn" class="military-button" style="background-color: var(--military-secondary);">
+
+                    <button id="addSoldierBtn" class="military-button"
+                        style="background-color: var(--military-secondary);">
                         <i class="fas fa-user-plus"></i> Thêm chiến sĩ
                     </button>
                 </div>
@@ -124,7 +127,7 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="table-container">
                     <table class="military-table">
                         <thead>
@@ -141,12 +144,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                                
+
                             <!-- Thêm các hàng khác tương tự -->
                         </tbody>
                     </table>
                 </div>
-                
+
                 <div class="table-footer">
                     <div class="pagination-controls">
                         <button class="pagination-button"><i class="fas fa-chevron-left"></i></button>
@@ -171,7 +174,7 @@
                         <label for="soldierName">Họ và tên</label>
                         <input type="text" id="soldierName" required>
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="soldierUnit">Đơn vị</label>
@@ -183,13 +186,13 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="soldierEmail">Tài khoản (Email)</label>
                             <input type="email" id="soldierEmail" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="soldierPassword">Mật khẩu</label>
                             <input type="password" id="soldierPassword" required>
@@ -201,18 +204,18 @@
                             <label for="soldierPhone">Sdt(Zalo)</label>
                             <input type="text" id="soldierPhone" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="soldierJob">Công việc</label>
                             <input type="text" id="soldierJob" required>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="soldierAvatar">Ảnh đại diện</label>
                         <input type="file" id="soldierAvatar" accept="image/*">
                     </div>
-                    
+
                     <div class="form-actions">
                         <button type="button" class="modal-button cancel-button">Hủy bỏ</button>
                         <button type="submit" class="modal-button save-button">Lưu lại</button>
@@ -224,12 +227,13 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
-        import { getFirestore }  from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
         // … và các import khác nếu cần
-      </script>
-      <!-- Cấu hình Firebase & export db -->
-      <script type="module" src="./src/js/firebase-config.js"></script>
-
+    </script>
+    <!-- Cấu hình Firebase & export db -->
+    <script type="module" src="./src/js/firebase-config.js"></script>
+    <script type="module" src="./src/js/logout.js"></script>
     <script type="module" src="./src/js/manage-soldiers.js"></script>
 </body>
+
 </html>

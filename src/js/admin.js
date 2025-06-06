@@ -291,11 +291,11 @@ function getSelectedWeekId() {
 
 // Xử lý đăng xuất
 document.getElementById('logoutBtn').addEventListener('click', async () => {
-  alert("!23")
-  // const result = await handleLogout();
-  // if (result.success) {
-  //   window.location.href = 'index.html';
-  // } else {
-  //   alert("Lỗi đăng xuất: " + result.error);
-  // }
+  // alert("!23")
+  const result = await handleLogout();
+  if (result.success) {
+    window.location.href = 'index.html';
+  } else {
+    alert("Lỗi đăng xuất: " + result.error);
+  }
 });

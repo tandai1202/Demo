@@ -10,6 +10,7 @@ import { app } from "./firebase-config.js";
 const db = getFirestore(app);
 
 const weekdayKeys = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+let currentMonth, currentYear;
 
 function getWeekNumber(date) {
     const d = new Date(date);
@@ -25,10 +26,12 @@ function getWeekId(year, week) {
 
 async function renderDutyCalendar(month, year) {
     const calendarGrid = document.querySelector(".calendar-grid");
+    currentMonth = month;
+    currentYear = year;
     if (!calendarGrid) return;
 
     // Clear grid
-    calendarGrid.innerHTML = "";
+    calendarGrid.innerHTML = "";currentYear = year; 
 
     // Render header
     const weekNames = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
@@ -109,7 +112,9 @@ async function renderDutyCalendar(month, year) {
 // Auto init for current month
 document.addEventListener("DOMContentLoaded", () => {
     const today = new Date();
-    renderDutyCalendar(today.getMonth() + 1, today.getFullYear());
+    currentMonth = today.getMonth() + 1;
+    currentYear = today.getFullYear();
+    renderDutyCalendar(currentMonth, currentYear);
 });
 
 function updateMonthIndicator(month, year) {
@@ -117,57 +122,23 @@ function updateMonthIndicator(month, year) {
   if (label) label.textContent = `Tháng ${month}/${year}`;
 }
 
-// document.addEventListener("DOMContentLoaded", () => {
-//     const today = new Date();
-//     renderDutyCalendar(today.getMonth() + 1, today.getFullYear());
-//     updateMonthIndicator(today.getMonth() + 1, today.getFullYear());
-
-//     // Nếu cần khởi tạo dropdown hoặc dữ liệu gì khác thì làm tại đây luôn
-// });
-
-document.getElementById('prevMonthBtn')?.addEventListener('click', () => {
-  shiftMonth(-1);
-});
-document.getElementById('nextMonthBtn')?.addEventListener('click', () => {
-  shiftMonth(1);
+document.querySelector('.prevMonthBtn').addEventListener('click', () => {
+    currentMonth--;
+    if (currentMonth < 1) {
+        currentMonth = 12;
+        currentYear--;
+    }
+    renderDutyCalendar(currentMonth, currentYear);
 });
 
-function shiftMonth(delta) {
-  const select = document.getElementById('monthSelect');
-  if (!select) return;
-
-  const current = select.value.split('-');
-  let year = parseInt(current[0]);
-  let month = parseInt(current[1]);
-
-  month += delta;
-  if (month < 1) {
-    month = 12;
-    year -= 1;
-  } else if (month > 12) {
-    month = 1;
-    year += 1;
-  }
-
-  const newValue = `${year}-${month.toString().padStart(2, '0')}`;
-  const optionExists = Array.from(select.options).some(opt => opt.value === newValue);
-
-  if (!optionExists) {
-    const opt = document.createElement('option');
-    opt.value = newValue;
-    opt.textContent = `Tháng ${month}/${year}`;
-    select.appendChild(opt);
-  }
-
-  select.value = newValue;
-
-  const selectedDate = new Date(year, month - 1, 1);
-  // loadNotesByMonth(selectedDate);
-  // renderCalendarGrid(selectedDate);
-  renderDutyCalendar(month, year);
-  updateMonthIndicator(month, year);
-}
-
+document.querySelector('.nextMonthBtn').addEventListener('click', () => {
+    currentMonth++;
+    if (currentMonth > 12) {
+        currentMonth = 1;
+        currentYear++;
+    }
+    renderDutyCalendar(currentMonth, currentYear);
+});
 
 // import {
 //   getFirestore,
