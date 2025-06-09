@@ -1,5 +1,161 @@
+<!-- user.html -->
 <!DOCTYPE html>
 <html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang Người Dùng</title>
+  <!-- Link tới CSS đã chỉnh sửa -->
+  <link rel="stylesheet" href="./src/css/user.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header: hiển thị tên user, nút Xem báo cáo và nút Đăng xuất -->
+    <header class="dashboard-header">
+      <div class="dashboard-title">
+        <i class="fas fa-user-circle"></i>
+        <span id="userNameDisplay">Xin chào, ...</span>
+      </div>
+      <div class="dashboard-actions">
+        <!-- <button id="reportBtn" class="report-button">
+          <i class="fas fa-chart-bar"></i> Xem báo cáo
+        </button> -->
+        <a id="reportBtn" class="report-button" href="report.html">
+          <i class="fas fa-chart-bar"></i> Xem báo cáo
+        </a>
+        <button id="logoutBtn" class="logout-button">
+          <i class="fas fa-sign-out-alt"></i> Đăng xuất
+        </button>
+      </div>
+    </header>
+
+    <!-- Phần bình chọn và hiển thị kết quả -->
+    <section id="voteSection" style="display: none;">
+      <!-- Thông tin tuần và ngày bắt đầu tuần -->
+      <div class="week-date" id="weekStartDate"></div>
+
+      <!-- Form bình chọn -->
+      <form id="voteForm" class="vote-form">
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" data-day="mon" value="mon" />
+            <span class="checkbox-custom"></span>
+            <span>Thứ 2</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" data-day="tue" value="tue" />
+            <span class="checkbox-custom"></span>
+            <span>Thứ 3</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" data-day="wed" value="wed" />
+            <span class="checkbox-custom"></span>
+            <span>Thứ 4</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" data-day="thu" value="thu" />
+            <span class="checkbox-custom"></span>
+            <span>Thứ 5</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" data-day="fri" value="fri" />
+            <span class="checkbox-custom"></span>
+            <span>Thứ 6</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" data-day="sat" value="sat" />
+            <span class="checkbox-custom"></span>
+            <span>Thứ 7</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" data-day="sun" value="sun" />
+            <span class="checkbox-custom"></span>
+            <span>Chủ nhật</span>
+          </label>
+        </div>
+
+        <div class="note-group">
+          <label for="note">Ghi chú (nếu có):</label>
+          <textarea id="note" placeholder="Nhập ghi chú..."></textarea>
+        </div>
+
+        <button type="submit" class="nav-button">Gửi bình chọn</button>
+        <div id="voteStatus" class="status-message"></div>
+      </form>
+
+      <!-- Bảng hiển thị kết quả bình chọn và chấm công -->
+      <div id="voteResults" class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Ngày</th>
+              <th>Bình chọn</th>
+              <th>Chấm công</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Thứ 2</td>
+              <td id="mon" class="vote-cell"></td>
+              <td id="monAttendance" class="attendance-cell"></td>
+            </tr>
+            <tr>
+              <td>Thứ 3</td>
+              <td id="tue" class="vote-cell"></td>
+              <td id="tueAttendance" class="attendance-cell"></td>
+            </tr>
+            <tr>
+              <td>Thứ 4</td>
+              <td id="wed" class="vote-cell"></td>
+              <td id="wedAttendance" class="attendance-cell"></td>
+            </tr>
+            <tr>
+              <td>Thứ 5</td>
+              <td id="thu" class="vote-cell"></td>
+              <td id="thuAttendance" class="attendance-cell"></td>
+            </tr>
+            <tr>
+              <td>Thứ 6</td>
+              <td id="fri" class="vote-cell"></td>
+              <td id="friAttendance" class="attendance-cell"></td>
+            </tr>
+            <tr>
+              <td>Thứ 7</td>
+              <td id="sat" class="vote-cell"></td>
+              <td id="satAttendance" class="attendance-cell"></td>
+            </tr>
+            <tr>
+              <td>Chủ nhật</td>
+              <td id="sun" class="vote-cell"></td>
+              <td id="sunAttendance" class="attendance-cell"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="confirmStatus" class="status-message"></div>
+
+      <!-- Phần hiển thị ghi chú đã lưu -->
+      <div id="noteContent" class="note-display">
+        <h3><i class="fas fa-sticky-note"></i> Ghi chú của bạn:</h3>
+        <p>...</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Import Font Awesome cho icon -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+  <!-- Script chính (module) -->
+  <script type="module" src="./src/js/user.js"></script>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +164,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
   <div class="container">
     <div class="dashboard-header">
@@ -35,74 +192,6 @@
       </div>
 
       <form id="voteForm" class="login-form">
-        <!-- <div class="checkbox-group">
-          <label><input type="checkbox" data-day="mon"> Thứ 2</label>
-          <label><input type="checkbox" data-day="tue"> Thứ 3</label>
-          <label><input type="checkbox" data-day="wed"> Thứ 4</label>
-          <label><input type="checkbox" data-day="thu"> Thứ 5</label>
-          <label><input type="checkbox" data-day="fri"> Thứ 6</label>
-          <label><input type="checkbox" data-day="sat"> Thứ 7</label>
-          <label><input type="checkbox" data-day="sun"> Chủ nhật</label>
-        </div> -->
-
-        <!-- <div class="checkbox-group">
-          <label>
-            <input type="checkbox" data-day="mon" />
-            <span class="checkbox-custom"></span>
-            <i class="fas fa-calendar-day"></i>
-            <span class="day-name">Thứ 2</span>
-            <span class="day-status"></span>
-          </label>
-
-          <label>
-            <input type="checkbox" data-day="tue" />
-            <span class="checkbox-custom"></span>
-            <i class="fas fa-calendar-day"></i>
-            <span class="day-name">Thứ 3</span>
-            <span class="day-status"></span>
-          </label>
-
-          <label>
-            <input type="checkbox" data-day="wed" />
-            <span class="checkbox-custom"></span>
-            <i class="fas fa-calendar-day"></i>
-            <span class="day-name">Thứ 4</span>
-            <span class="day-status"></span>
-          </label>
-
-          <label>
-            <input type="checkbox" data-day="thu" />
-            <span class="checkbox-custom"></span>
-            <i class="fas fa-calendar-day"></i>
-            <span class="day-name">Thứ 5</span>
-            <span class="day-status"></span>
-          </label>
-
-          <label>
-            <input type="checkbox" data-day="fri" />
-            <span class="checkbox-custom"></span>
-            <i class="fas fa-calendar-day"></i>
-            <span class="day-name">Thứ 6</span>
-            <span class="day-status"></span>
-          </label>
-
-          <label>
-            <input type="checkbox" data-day="sat" />
-            <span class="checkbox-custom"></span>
-            <i class="fas fa-calendar-day"></i>
-            <span class="day-name">Thứ 7</span>
-            <span class="day-status"></span>
-          </label>
-
-          <label>
-            <input type="checkbox" data-day="sun" />
-            <span class="checkbox-custom"></span>
-            <i class="fas fa-calendar-day"></i>
-            <span class="day-name">Chủ nhật</span>
-            <span class="day-status"></span>
-          </label>
-        </div> -->
-
         <div class="checkbox-group">
           <label class="checkbox-label">
             <input type="checkbox" data-day="mon" />
@@ -111,7 +200,7 @@
             <span class="day-name">Thứ 2</span>
             <span class="day-status"></span>
           </label>
-        
+
           <label class="checkbox-label">
             <input type="checkbox" data-day="tue" />
             <span class="checkbox-custom"></span>
@@ -159,10 +248,8 @@
             <span class="day-name">Chủ nhật</span>
             <span class="day-status"></span>
           </label>
-        
-          <!-- Các ngày khác tương tự -->
         </div>
-        
+
 
         <div class="form-group note-group">
           <label for="note">Ghi chú:</label>
@@ -172,10 +259,7 @@
           <span>Gửi bình chọn</span>
           <i class="fas fa-paper-plane"></i>
         </button>
-        <!-- <button type="submit" class="login-button">
-          <span>Ghi chú</span>
-          <i class="fas fa-paper-plane"></i>
-        </button> -->
+
       </form>
       <div id="voteStatus" class="status-message"></div>
       <div id="confirmStatus" class="status-message" style="margin-top: 10px;"></div>
@@ -224,7 +308,7 @@
           </tbody>
         </table>
       </div>
-      <!-- Thêm ở đây -->
+      
       <div id="noteDisplay" class="note-display">
         <h3><i class="fas fa-sticky-note"></i> Ghi chú của bạn:</h3>
         <p id="noteContent">Không có ghi chú.</p>
@@ -232,9 +316,24 @@
     </div>
   </div>
 
-  <!-- Import modules -->
   <script type="module" src="./src/js/firebase-config.js"></script>
   <script type="module" src="./src/js/user.js"></script>
-   <!-- <script src="./src/js/demo-user.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const raw = sessionStorage.getItem('currentUser');
+      if (!raw) {
+        window.location.href = 'index.html';
+        return;
+      }
+      const currentUser = JSON.parse(raw);
+      // Chỉ cho user thường vào
+      if (currentUser.role !== 'user') {
+        window.location.href = 'dashboard-admin.html';
+      }
+      document.getElementById('welcome-message').textContent =
+        'Xin chào, ' + currentUser.email + ' (User)';
+    });
+  </script>
 </body>
-</html>
+
+</html> -->

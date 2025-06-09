@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css" rel="stylesheet">
 </head>
+
 <body>
     <!-- Header với banner 30/4 -->
     <header class="dashboard-header">
@@ -20,7 +22,7 @@
                 <!-- <img src="./image/" alt="Huy hiệu" class="badge-icon"> -->
             </div>
         </div>
-        
+
         <nav class="dashboard-nav">
             <div class="nav-brand">
                 <i class="fas fa-shield-alt military-icon"></i>
@@ -79,7 +81,7 @@
                     </a>
                 </li>
             </ul>
-            
+
             <div class="sidebar-footer">
                 <div class="military-quote">
                     <i class="fas fa-quote-left"></i>
@@ -89,7 +91,7 @@
         </aside>
 
         <!-- Main content -->
-       <main class="dashboard-content">
+        <main class="dashboard-content">
             <!-- Bộ lọc người dùng + Export -->
             <!-- <div class="note-controls">
             <div class="filter-group">
@@ -105,44 +107,44 @@
 
             <!-- Danh sách ghi chú -->
             <section class="note-section">
-            <div class="note-header">
-                <h2 class="note-title">
-                <i class="fas fa-sticky-note"></i> Danh sách ghi chú tháng 
-                <span id="noteMonthLabel"></span>
-                </h2>
-                <!-- <select id="monthSelect" class="month-select"></select> -->
-            </div>
+                <div class="note-header">
+                    <h2 class="note-title">
+                        <i class="fas fa-sticky-note"></i> Danh sách ghi chú tháng
+                        <span id="noteMonthLabel"></span>
+                    </h2>
+                    <!-- <select id="monthSelect" class="month-select"></select> -->
+                </div>
 
-            <table class="military-table">
-                <thead>
-                <tr>
-                    <th>Họ tên</th>
-                    <!-- <th>Email</th> -->
-                    <th>Ghi chú</th>
-                    <th>Ngày gửi</th>
-                </tr>
-                </thead>
-                <tbody id="noteOnlyTableBody"></tbody>
-            </table>
+                <table class="military-table">
+                    <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <!-- <th>Email</th> -->
+                            <th>Ghi chú</th>
+                            <th>Ngày gửi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="noteOnlyTableBody"></tbody>
+                </table>
             </section>
 
             <!-- Lịch trực bình chọn -->
             <section class="calendar-container">
-            <div class="calendar-header">
-                <div class="calendar-title">
-                <i class="fas fa-calendar-alt"></i> Lịch trực
+                <div class="calendar-header">
+                    <div class="calendar-title">
+                        <i class="fas fa-calendar-alt"></i> Lịch trực
+                    </div>
+                    <div class="calendar-nav">
+                        <button id="prevMonthBtn" class="nav-button"><i class="fas fa-chevron-left"></i></button>
+                        <span class="month-indicator">...</span>
+                        <button id="nextMonthBtn" class="nav-button"><i class="fas fa-chevron-right"></i></button>
+                    </div>
                 </div>
-                <div class="calendar-nav">
-                <button id="prevMonthBtn" class="nav-button"><i class="fas fa-chevron-left"></i></button>
-                <span class="month-indicator">...</span>
-                <button id="nextMonthBtn" class="nav-button"><i class="fas fa-chevron-right"></i></button>
+                <div class="calendar-grid">
+                    <!-- Rendered by JS -->
                 </div>
-            </div>
-            <div class="calendar-grid">
-                <!-- Rendered by JS -->
-            </div>
             </section>
-                
+
 
             <!-- <section class="calendar-container">
                 <div class="calendar-header">
@@ -156,10 +158,10 @@
                     </div>
                 </div>
             <div class="calendar-grid"> -->
-                <!-- Rendered by JS -->
-            </div>
-            </section>
-        </main>
+            <!-- Rendered by JS -->
+    </div>
+    </section>
+    </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
@@ -167,5 +169,25 @@
     <script type="module" src="./src/js/logout.js"></script>
     <script type="module" src="./src/js/calendar-schedule.js"></script>
     <script type="module" src="./src/js/dashboard-admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const raw = sessionStorage.getItem('currentUser');
+            if (!raw) {
+                // Nếu không có thông tin trong sessionStorage: chuyển về login
+                window.location.href = 'index.html'; // hoặc tên file đăng nhập của bạn
+                return;
+            }
+            const currentUser = JSON.parse(raw);
+            // Chỉ cho admin vào
+            if (currentUser.role !== 'admin') {
+                window.location.href = 'user.html'; // hoặc trang phù hợp
+            }
+            // Nếu kiểm tra ok, có thể hiển thị email/role ra UI
+            document.getElementById('welcome-message').textContent =
+                'Xin chào, ' + currentUser.email + ' (Admin)';
+        });
+    </script>
 </body>
+
 </html>

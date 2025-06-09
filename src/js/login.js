@@ -11,8 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('password').value;
 
     const result = await handleLogin(email, password);
-    console.log(result)
+    console.log(result);
     if (result.success) {
+      // Lưu thông tin người dùng vào sessionStorage
+      const userData = {
+        email: email,
+        role: result.role,
+        uid: result.uid   // nếu handleLogin trả về uid
+      };
+      sessionStorage.setItem('currentUser', JSON.stringify(userData));
+      // Nếu muốn dùng localStorage thay sessionStorage, chỉ cần thay dòng trên thành:
+      localStorage.setItem('currentUser', JSON.stringify(userData));
+
+      // Điều hướng theo role
       if (result.role === 'admin') {
         window.location.href = 'dashboard-admin.html';
       } else if (result.role === 'user') {
@@ -34,4 +45,4 @@ function showError(message) {
   errorDiv.textContent = message;
   document.querySelector('.login-card').appendChild(errorDiv);
   setTimeout(() => errorDiv.remove(), 3000);
-} 
+}
