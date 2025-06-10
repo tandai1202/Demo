@@ -17,30 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCalendarGrid(now); // Chỉ lịch trắng
 });
 
-// Tạo dropdown chọn tháng
-// function loadMonthDropdown() {
-//   const select = document.getElementById('monthSelect');
-//   const now = new Date();
-
-//   for (let i = 0; i < 12; i++) {
-//     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-//     const mm = String(d.getMonth() + 1).padStart(2, '0');
-//     const yyyy = d.getFullYear();
-//     const option = document.createElement('option');
-//     option.value = `${yyyy}-${mm}`;
-//     option.textContent = `Tháng ${mm}/${yyyy}`;
-//     if (i === 0) option.selected = true;
-//     select.appendChild(option);
-//   }
-
-//   select.addEventListener('change', () => {
-//     const [year, month] = select.value.split("-");
-//     const selectedDate = new Date(year, parseInt(month) - 1, 1);
-//     loadNotesByMonth(selectedDate);
-//     renderCalendarGrid(selectedDate);
-//   });
-// }
-
 // Tải dữ liệu ghi chú theo tháng
 async function loadNotesByMonth(selectedDate) {
   const voteCol = collectionGroup(db, 'votes');
@@ -97,41 +73,6 @@ function renderNoteTable(data) {
     tbody.appendChild(tr);
   });
 }
-
-// Tạo danh sách người dùng duy nhất cho dropdown lọc
-// function renderUserFilter(notes) {
-//   const select = document.getElementById('userFilter');
-//   const emails = [...new Set(notes.map(n => n.email))].sort();
-//   select.innerHTML = '<option value="all">-- Tất cả --</option>';
-//   emails.forEach(email => {
-//     const opt = document.createElement('option');
-//     opt.value = email;
-//     opt.textContent = email;
-//     select.appendChild(opt);
-//   });
-// }
-
-// Lọc khi chọn người dùng
-// document.getElementById('userFilter').addEventListener('change', () => {
-//   const value = document.getElementById('userFilter').value;
-//   const filtered = value === 'all'
-//     ? fullNoteList
-//     : fullNoteList.filter(n => n.email === value);
-//   renderNoteTable(filtered);
-// });
-
-// Xuất ra Excel
-// document.getElementById('exportExcelBtn').addEventListener('click', () => {
-//   const wsData = [
-//     ['Họ tên', 'Email', 'Ghi chú', 'Ngày gửi'],
-//     ...fullNoteList.map(n => [n.name, n.email, n.note, n.dateFormatted])
-//   ];
-
-//   const wb = XLSX.utils.book_new();
-//   const ws = XLSX.utils.aoa_to_sheet(wsData);
-//   XLSX.utils.book_append_sheet(wb, ws, 'GhiChu');
-//   XLSX.writeFile(wb, `GhiChu_${new Date().toISOString().slice(0, 10)}.xlsx`);
-// });
 
 // Tạo lịch tháng đơn giản (không đánh dấu ghi chú)
 function renderCalendarGrid(date) {

@@ -109,7 +109,8 @@
             <section class="note-section">
                 <div class="note-header">
                     <h2 class="note-title">
-                        <i class="fas fa-sticky-note"></i> Danh sách ghi chú tháng
+                        <!-- <i class="fas fa-sticky-note"></i>  -->
+                        Danh sách ghi chú tháng
                         <span id="noteMonthLabel"></span>
                     </h2>
                     <!-- <select id="monthSelect" class="month-select"></select> -->
@@ -132,17 +133,18 @@
             <section class="calendar-container">
                 <div class="calendar-header">
                     <div class="calendar-title">
-                        <i class="fas fa-calendar-alt"></i> Lịch trực
-                    </div>
-                    <div class="calendar-nav">
-                        <button id="prevMonthBtn" class="nav-button"><i class="fas fa-chevron-left"></i></button>
+                        <!-- <i class="fas fa-calendar-alt"></i> -->
                         <span class="month-indicator">...</span>
-                        <button id="nextMonthBtn" class="nav-button"><i class="fas fa-chevron-right"></i></button>
                     </div>
+                    <!-- <div class="calendar-nav">
+                        <button class="nav-button prevMonthBtn"><i class="fas fa-chevron-left"></i></button>
+                        <span class="month-indicator">...</span>
+                        <button class="nav-button nextMonthBtn"><i class="fas fa-chevron-right"></i></button>
+                    </div> -->
                 </div>
-                <div class="calendar-grid">
-                    <!-- Rendered by JS -->
-                </div>
+            <div class="calendar-grid">
+                <!-- Rendered by JS -->
+            </div>
             </section>
 
 
@@ -171,22 +173,22 @@
     <script type="module" src="./src/js/dashboard-admin.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const raw = sessionStorage.getItem('currentUser');
-            if (!raw) {
-                // Nếu không có thông tin trong sessionStorage: chuyển về login
-                window.location.href = 'index.html'; // hoặc tên file đăng nhập của bạn
-                return;
-            }
-            const currentUser = JSON.parse(raw);
-            // Chỉ cho admin vào
-            if (currentUser.role !== 'admin') {
-                window.location.href = 'user.html'; // hoặc trang phù hợp
-            }
-            // Nếu kiểm tra ok, có thể hiển thị email/role ra UI
-            document.getElementById('welcome-message').textContent =
-                'Xin chào, ' + currentUser.email + ' (Admin)';
-        });
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const raw = sessionStorage.getItem('currentUser');
+        //     if (!raw) {
+        //         // Nếu không có thông tin trong sessionStorage: chuyển về login
+        //         window.location.href = 'index.html'; // hoặc tên file đăng nhập của bạn
+        //         return;
+        //     }
+        //     const currentUser = JSON.parse(raw);
+        //     // Chỉ cho admin vào
+        //     if (currentUser.role !== 'admin') {
+        //         window.location.href = 'user.html'; // hoặc trang phù hợp
+        //     }
+        //     // Nếu kiểm tra ok, có thể hiển thị email/role ra UI
+        //     document.getElementById('welcome-message').textContent =
+        //         'Xin chào, ' + currentUser.email + ' (Admin)';
+        // });
     </script>
 </body>
 

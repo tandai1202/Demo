@@ -119,10 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateMonthIndicator(month, year) {
   const label = document.querySelector(".month-indicator");
-  if (label) label.textContent = `Tháng ${month}/${year}`;
+  if (label) label.textContent = `Lịch trực tháng ${month}/${year}`;
 }
 
-document.querySelector('.prevMonthBtn').addEventListener('click', () => {
+document.querySelector('.prevMonthBtn')?.addEventListener('click', () => {
     currentMonth--;
     if (currentMonth < 1) {
         currentMonth = 12;
@@ -131,7 +131,7 @@ document.querySelector('.prevMonthBtn').addEventListener('click', () => {
     renderDutyCalendar(currentMonth, currentYear);
 });
 
-document.querySelector('.nextMonthBtn').addEventListener('click', () => {
+document.querySelector('.nextMonthBtn')?.addEventListener('click', () => {
     currentMonth++;
     if (currentMonth > 12) {
         currentMonth = 1;
