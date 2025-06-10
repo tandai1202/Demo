@@ -18,8 +18,13 @@
   font-family: 'Roboto', sans-serif;
 }
 
+/* html {
+  font-size: 100%; 
+} */
+
 html {
-  font-size: 100%; /* 16px */
+  /* tối thiểu 14px, tối đa 18px, ưu tiên 1.2vw */
+  font-size: clamp(0.875rem, 1.2vw, 1.125rem);
 }
 
 body {
@@ -353,6 +358,62 @@ tr:nth-child(even) {
   white-space: pre-wrap;
   font-size: 0.9rem;
 }
+
+/* Bao ngoài cuộn ngang khi cần */
+#allVotesSection {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+/* Bảng full-width, border và font */
+#allVotesTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: sans-serif;
+}
+
+/* Header */
+#allVotesTable thead th {
+  background: var(--bg-gradient);
+  color: white;
+  padding: 0.75rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Ô dữ liệu */
+#allVotesTable td {
+  padding: 0.5rem;
+  vertical-align: top;
+  border: 1px solid #dde;
+}
+
+#allVotesTable td ul {
+  list-style: none;
+}
+
+#allVotesTable td ol li{
+  text-align: left;
+}
+
+/* Dòng chẵn */
+#allVotesTable tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* Hover cả dòng */
+#allVotesTable tbody tr:hover {
+  background: #eef5fb;
+}
+
+/* Danh sách có đánh số */
+#allVotesTable td ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
 
 /* ===== Responsive breakpoints ===== */
 @media (max-width: 768px) {

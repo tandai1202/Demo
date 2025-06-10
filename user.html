@@ -83,8 +83,13 @@
         <div id="voteStatus" class="status-message"></div>
       </form>
 
+      <!-- Phần hiển thị ghi chú đã lưu -->
+      <div id="noteContent" class="note-display">
+        <h3><i class="fas fa-sticky-note"></i> Ghi chú của bạn:</h3>
+        <p>...</p>
+      </div>
       <!-- Bảng hiển thị kết quả bình chọn và chấm công -->
-      <div id="voteResults" class="table-responsive">
+      <!-- <div id="voteResults" class="table-responsive">
         <table>
           <thead>
             <tr>
@@ -131,15 +136,23 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> -->
+
+      <!-- Lịch bình chọn của mọi người -->
+      <section id="allVotesSection" class="table-responsive">
+        <h3>Lịch bình chọn của mọi người</h3>
+        <table id="allVotesTable">
+          <thead>
+           
+          </thead>
+          <tbody>
+            <!-- Dữ liệu sẽ được JS đổ vào -->
+          </tbody>
+        </table>
+      </section>
 
       <div id="confirmStatus" class="status-message"></div>
 
-      <!-- Phần hiển thị ghi chú đã lưu -->
-      <div id="noteContent" class="note-display">
-        <h3><i class="fas fa-sticky-note"></i> Ghi chú của bạn:</h3>
-        <p>...</p>
-      </div>
     </section>
   </div>
 
@@ -147,6 +160,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
   <!-- Script chính (module) -->
   <script type="module" src="./src/js/user.js"></script>
+  <script>
+    // document.addEventListener('DOMContentLoaded', () => {
+    //   const raw = sessionStorage.getItem('currentUser');
+    //   if (!raw) {
+    //     window.location.href = 'index.html';
+    //     return;
+    //   }
+    //   const currentUser = JSON.parse(raw);
+    //   // Chỉ cho user thường vào
+    //   if (currentUser.role !== 'user') {
+    //     window.location.href = 'dashboard-admin.html';
+    //   }
+    //   document.getElementById('welcome-message').textContent =
+    //     'Xin chào, ' + currentUser.email + ' (User)';
+    // });
+  </script>
 </body>
 </html>
 
