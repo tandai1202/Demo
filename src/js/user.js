@@ -277,17 +277,28 @@ async function renderVoteForm() {
   const weekId = getCurrentWeekId();
   const allowed = computeAllowedDays(weekId);
   document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => {
+    // const day = cb.dataset.day;
+    // if (!allowed.includes(day)) {
+    //   cb.disabled = true;
+    //   cb.parentElement.style.opacity = '0.5';
+    //   cb.parentElement.style.textDecoration = 'line-through';
+    // } else {
+    //   cb.disabled = false;
+    //   cb.parentElement.style.opacity = '';
+    //   cb.parentElement.style.textDecoration = '';
+    // }
+    // cb.checked = false;
+    const label = cb.closest('.checkbox-label');
     const day = cb.dataset.day;
-    if (!allowed.includes(day)) {
-      cb.disabled = true;
-      cb.parentElement.style.opacity = '0.5';
-      cb.parentElement.style.textDecoration = 'line-through';
-    } else {
+    if (allowed.includes(day)) {
+      // Hiển thị checkbox của ngày được chọn
+      label.style.display = '';
+      cb.checked = false;
       cb.disabled = false;
-      cb.parentElement.style.opacity = '';
-      cb.parentElement.style.textDecoration = '';
+    } else {
+      // Ẩn hẳn ngày không được chọn
+      label.style.display = 'none';
     }
-    cb.checked = false;
   });
 
   // Nếu đã vote trước, check lại
