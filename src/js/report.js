@@ -30,8 +30,6 @@ const weekDayMapping = {
 
 // Khởi tạo các biến global
 let currentUserRole = '';
-let selectedUserId = '';
-let selectedUserEmail = '';
 var usersList = []; 
 
 
@@ -51,7 +49,7 @@ onAuthStateChanged(auth, async (user) => {
 
     const userData = docSnap.data();
     currentUserRole = userData.role;
-    console.log(userData)
+    // console.log(userData)
     // ✅ Thêm dòng này để hiển thị họ tên
     document.getElementById("userName").textContent = `Họ và tên: ${userData.name || 'Chưa có'}`;
 
@@ -60,56 +58,18 @@ onAuthStateChanged(auth, async (user) => {
         await loadUsersList();
         document.getElementById("backBtn").href = "admin.html";
     } else {
-        usersList = [{ id: user.uid, email: userData.email }];
+        usersList = [{ id: user.uid, name: userData.name }];
         document.getElementById("backBtn").href = "user.html";
     }
 
-    console.log(currentUserRole)
-
     // Khởi tạo các selector
     initializeDateSelectors();
-    
-    // Lấy userId từ URL nếu có
-    const urlParams = new URLSearchParams(window.location.search);
-    const userIdFromUrl = urlParams.get('userId');
-    if (userIdFromUrl && currentUserRole === 'admin') {
-        selectedUserId = userIdFromUrl;
-        const userDoc = await getDoc(doc(db, 'users', userIdFromUrl));
-        if (userDoc.exists()) {
-            selectedUserEmail = userDoc.data().email;
-            document.getElementById('userSelect').value = userIdFromUrl;
-            document.getElementById('userInfo').textContent = `Người dùng: ${selectedUserEmail}`;
-            loadReportData();
-            
-        }
-    }
 });
 
 async function loadUsersList() {
     const snap = await getDocs(query(collection(db, "users"), where("role", "==", "user")));
-    usersList = snap.docs.map((d) => ({ id: d.id, email: d.data().email }));
+    usersList = snap.docs.map((d) => ({ id: d.id, name: d.data().name }));
 }
-
-// Khởi tạo danh sách user cho admin
-// async function loadUsersList() {
-//     const userSelect = document.getElementById('userSelect');
-//     const usersRef = collection(db, 'users');
-//     const q = query(usersRef, where('role', '==', 'user'));
-//     const querySnapshot = await getDocs(q);
-    
-//     querySnapshot.forEach((doc) => {
-//         const option = document.createElement('option');
-//         option.value = doc.id;
-//         option.textContent = doc.data().email;
-//         userSelect.appendChild(option);
-//     });
-
-//     userSelect.addEventListener('change', (e) => {
-//         selectedUserId = e.target.value;
-//         selectedUserEmail = e.target.selectedOptions[0].textContent;
-//         loadReportData();
-//     });
-// }
 
 // Khởi tạo các selector ngày tháng
 function initializeDateSelectors() {
@@ -182,87 +142,6 @@ function getDaysInMonth(month, year) {
     return out;
 }
 
-// Load và hiển thị dữ liệu báo cáo
-// async function loadReportData() {
-//     const month = +document.getElementById("monthSelect").value;
-//     const year = +document.getElementById("yearSelect").value;
-//     const days = getDaysInMonth(month, year);
-
-//     // ----- Build header (1…n) -----
-//     const headRow = document.querySelector(".report-table thead tr");
-//     headRow.innerHTML = "<th>Người dùng</th>";
-//     days.forEach((d) => {
-//         headRow.innerHTML += `<th>${d.getDate()}</th>`;
-//     });
-
-//     // ----- Body -----
-//     const tbody = document.getElementById("reportTableBody");
-//     tbody.innerHTML = "";
-
-    
-//     // Lấy danh sách người dùng
-//     // const usersRef = collection(db, 'users');
-//     // const q = query(usersRef, where('role', '==', 'user'));
-//     // const querySnapshot = await getDocs(q);
-//     // const userListAdmin = [];
-//     // querySnapshot.forEach((docSnap) => {
-//     //     let userData = docSnap.data();
-//     //     userData.id = docSnap.id;
-//     //     userListAdmin.push(userData);
-//     // });
-    
-//     // const targets = currentUserRole === "admin" ? userListAdmin : usersList; // giữ rõ ràng
-//     // console.log(targets)
-//     // console.log(userList)
-
-//     if (!usersList.length && currentUserRole === "admin") await loadUsersList();
-
-//     // Vẫn rỗng => hiển thị thông báo
-//     if (!usersList.length) {
-//         document.getElementById("reportTableBody").innerHTML =
-//             `<tr><td colspan="${days.length + 1}">Không tìm thấy người dùng</td></tr>`;
-//         return;
-//     }
-
-//     for (const user of usersList) {
-//         // Pre‑fetch tuần liên quan
-//         const weeksCache = {};
-//         const weeksNeeded = new Set(days.map((d) => getWeekNumber(d)));
-//         for (const wk of weeksNeeded) {
-//             const id = getWeekId(year, wk);
-//             const snap = await getDoc(doc(db, "weeks", id, "votes", user.id));
-//             weeksCache[id] = snap.exists() ? snap.data() : null;
-//         }
-
-//         const row = document.createElement("tr");
-//         const nameTd = document.createElement("td");
-//         nameTd.textContent = user.email;
-//         row.appendChild(nameTd);
-
-//         days.forEach((date) => {
-//             const td = document.createElement("td");
-//             const weekId = getWeekId(year, getWeekNumber(date));
-//             const data = weeksCache[weekId];
-//             const key = weekdayKeys[date.getDay()];
-//             if (data && data.days[key]) {
-//                 if (data.confirmed[key]) {
-//                     td.innerHTML = data.attendance[key]
-//                         ? "<span class='confirmed'>✔</span>"
-//                         : "<span class='unconfirmed'>✘</span>";
-//                 } else {
-//                     td.innerHTML = "<span class='unconfirmed'>⋯</span>";
-//                 }
-//                 td.title = `${weekDayMapping[key]} - ${data.confirmed[key] ? "Đã xác nhận" : "Chưa xác nhận"}`;
-//             } else {
-//                 td.textContent = "–";
-//             }
-//             row.appendChild(td);
-//         });
-
-//         tbody.appendChild(row);
-//     }
-// }
-
 async function loadReportData() {
     const month = +document.getElementById("monthSelect").value;
     const year  = +document.getElementById("yearSelect").value;
@@ -278,6 +157,7 @@ async function loadReportData() {
       await loadUsersList();
   
     for (const user of usersList) {
+        console.log(usersList)
       // --- fetch tuần vào cache như trước ---
       const weeksNeeded = new Set(days.map(d => getWeekNumber(d)));
       const weeksCache  = {};
@@ -310,17 +190,17 @@ async function loadReportData() {
   
       // --- tạo row ---
       const tr      = document.createElement("tr");
-      const tdEmail = document.createElement("td");
+      const tdName = document.createElement("td");
       const tdDays  = document.createElement("td");
       const tdCount = document.createElement("td");
   
-      tdEmail.textContent = user.email;
+      tdName.textContent = user.name;
       tdDays.textContent  = attended.length
         ? attended.join(", ")
         : "Chưa có ngày nào";
       tdCount.textContent = count;
   
-      tr.append(tdEmail, tdDays, tdCount);
+      tr.append(tdName, tdDays, tdCount);
       tbody.appendChild(tr);
     }
   
@@ -342,5 +222,14 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
 // Xử lý nút quay lại
 document.getElementById('backBtn').addEventListener('click', (e) => {
     e.preventDefault();
-    window.location.href = e.target.getAttribute('href');
+    window.history.back();
 });
+
+// const backBtn = document.getElementById('backBtn');
+//     backBtn.addEventListener('click', function() {
+//       // 1) Nếu muốn quay về trang trước đó trong lịch sử trình duyệt:
+//       window.history.back();
+
+//       // 2) Nếu bạn muốn luôn chuyển về đúng trang user (ví dụ '/user'):
+//       // window.location.href = '/user';
+//     });
