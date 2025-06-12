@@ -2,15 +2,16 @@
 // (Đảm bảo đã import firebase scripts trong html)
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDUlj69mBwnPlEfahBs52dMWShangAXGNk",
-  authDomain: "fir-qs-4b074.firebaseapp.com",
-  projectId: "fir-qs-4b074",
-  storageBucket: "fir-qs-4b074.firebasestorage.app",
-  messagingSenderId: "354412835400",
-  appId: "1:354412835400:web:5043359b00be2a12e51e7d",
-  measurementId: "G-LENXY1MNNW"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
-  
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
