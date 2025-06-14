@@ -37,6 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const soldierForm = document.getElementById('soldierForm');
   const soldierModal = document.getElementById('soldierModal');
   const addSoldierBtn = document.getElementById('addSoldierBtn');
+  // tự động cập nhập email
+  const nameInput = document.getElementById('soldierName');
+  const emailInput = document.getElementById('soldierEmail');
+
+  nameInput.addEventListener('blur', async () => {
+    const name = nameInput.value.trim();
+    if (name) {
+      const email = await generateUniqueEmail(name);
+      emailInput.value = email;
+    }
+  });
 
   // Hiển thị danh sách người dùng
   onSnapshot(soldiersCol, snapshot => {
@@ -79,12 +90,18 @@ document.addEventListener('DOMContentLoaded', () => {
   soldierForm.addEventListener('submit', async e => {
     e.preventDefault();
 
-    const name = document.getElementById('soldierName').value;
+    const name = document.getElementById('soldierName').value.trim();
     const unit = document.getElementById('soldierUnit').value;
-    const email = document.getElementById('soldierEmail').value;
     const password = document.getElementById('soldierPassword').value;
     const phone = document.getElementById('soldierPhone').value;
     const job = document.getElementById('soldierJob').value;
+
+    // Tạo email tự động từ tên
+    let email = document.getElementById('soldierEmail').value.trim();
+    if (!email) {
+      email = await generateUniqueEmail(name);
+      document.getElementById('soldierEmail').value = email;
+    }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -95,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         unit,
         email,
         avatarURL: null,
-        password, // nếu bạn muốn lưu (cân nhắc không nên lưu plaintext)
+        password,
         phone,
         job,
         role: "user",
@@ -109,6 +126,42 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Lỗi khi tạo tài khoản: ' + err.message);
     }
   });
+
+  // hàm tạo email tự động
+  async function generateUniqueEmail(fullName) {
+    const cleanName = removeVietnameseTones(fullName.trim().toLowerCase());
+    const parts = cleanName.split(/\s+/);
+    if (parts.length < 2) return null;
+
+    const lastName = parts[parts.length - 1]; // Tên
+    const initials = parts.slice(0, -1).map(word => word[0]).join(''); // Chữ cái đầu họ + tên đệm
+    let baseEmail = `${lastName}${initials}`;
+    let email = `${baseEmail}@gmail.com`;
+
+    const usersRef = collection(db, "users");
+    let count = 0;
+
+    // Lặp kiểm tra trùng email
+    while (true) {
+      const q = query(usersRef, where("email", "==", email));
+      const snapshot = await getDocs(q);
+      if (snapshot.empty) break;
+      count++;
+      email = `${baseEmail}${count}@gmail.com`;
+    }
+
+    return email;
+  }
+
+  // Hàm xóa ký tự  tiếng Việt
+  function removeVietnameseTones(str) {
+    return str.normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .replace(/đ/g, "d").replace(/Đ/g, "D");
+  }
+
+
+
 
   // Modal và các nút đóng
   const closeModal = document.querySelector('.close-modal');
