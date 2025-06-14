@@ -224,12 +224,3 @@ document.getElementById('backBtn').addEventListener('click', (e) => {
     e.preventDefault();
     window.history.back();
 });
-
-// const backBtn = document.getElementById('backBtn');
-//     backBtn.addEventListener('click', function() {
-//       // 1) Nếu muốn quay về trang trước đó trong lịch sử trình duyệt:
-//       window.history.back();
-
-//       // 2) Nếu bạn muốn luôn chuyển về đúng trang user (ví dụ '/user'):
-//       // window.location.href = '/user';
-//     });

@@ -123,7 +123,6 @@ async function loadReportData() {
     const days  = getDaysInMonth(month, year);
 
     const tbody = document.getElementById("reportTableBody");
-    console.log(tbody)
     tbody.innerHTML = "";
 
     let grandTotal = 0;
@@ -191,60 +190,60 @@ async function loadReportData() {
 }
 
 // Update charts
-function updateUnitChart(stats) {
-    const ctx = document.getElementById('attendanceByUnitChart').getContext('2d');
-    if (window.unitChart) window.unitChart.destroy();
-    window.unitChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(stats),
-            datasets: [{
-                label: 'Số ngày trực',
-                data: Object.values(stats),
-                backgroundColor: 'rgba(42, 92, 69, 0.7)',
-                borderColor: 'rgba(42, 92, 69, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    });
-}
+// function updateUnitChart(stats) {
+//     const ctx = document.getElementById('attendanceByUnitChart').getContext('2d');
+//     if (window.unitChart) window.unitChart.destroy();
+//     window.unitChart = new Chart(ctx, {
+//         type: 'bar',
+//         data: {
+//             labels: Object.keys(stats),
+//             datasets: [{
+//                 label: 'Số ngày trực',
+//                 data: Object.values(stats),
+//                 backgroundColor: 'rgba(42, 92, 69, 0.7)',
+//                 borderColor: 'rgba(42, 92, 69, 1)',
+//                 borderWidth: 1
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             maintainAspectRatio: false,
+//             scales: {
+//                 y: { beginAtZero: true }
+//             }
+//         }
+//     });
+// }
 
-function updateCompletionChart(stats) {
-    const ctx = document.getElementById('completionRateChart').getContext('2d');
-    if (window.rateChart) window.rateChart.destroy();
-    window.rateChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Hoàn thành', 'Chưa hoàn thành', 'Vắng mặt'],
-            datasets: [{
-                data: [stats.completed, stats.notCompleted, stats.absent],
-                backgroundColor: [
-                    'rgba(58, 125, 93, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(209, 0, 0, 0.7)'
-                ],
-                borderColor: [
-                    'rgba(58, 125, 93, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(209, 0, 0, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { position: 'bottom' } }
-        }
-    });
-}
+// function updateCompletionChart(stats) {
+//     const ctx = document.getElementById('completionRateChart').getContext('2d');
+//     if (window.rateChart) window.rateChart.destroy();
+//     window.rateChart = new Chart(ctx, {
+//         type: 'doughnut',
+//         data: {
+//             labels: ['Hoàn thành', 'Chưa hoàn thành', 'Vắng mặt'],
+//             datasets: [{
+//                 data: [stats.completed, stats.notCompleted, stats.absent],
+//                 backgroundColor: [
+//                     'rgba(58, 125, 93, 0.7)',
+//                     'rgba(255, 206, 86, 0.7)',
+//                     'rgba(209, 0, 0, 0.7)'
+//                 ],
+//                 borderColor: [
+//                     'rgba(58, 125, 93, 1)',
+//                     'rgba(255, 206, 86, 1)',
+//                     'rgba(209, 0, 0, 1)'
+//                 ],
+//                 borderWidth: 1
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             maintainAspectRatio: false,
+//             plugins: { legend: { position: 'bottom' } }
+//         }
+//     });
+// }
 
 // Logout
 document.getElementById('logoutBtn').addEventListener('click', async () => {
