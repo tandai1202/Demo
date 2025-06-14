@@ -344,6 +344,11 @@ body {
     overflow: hidden;
 }
 
+/* Ẩn phần tử khi có class .hidden */
+.calendar-grid.hidden {
+  display: none;
+}
+
 .day-header {
     background-color: var(--military-primary);
     color: white;

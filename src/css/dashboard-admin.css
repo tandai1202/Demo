@@ -832,6 +832,175 @@ body {
     background-color: var(--military-dark);
 }
 
+/* 1. Đảm bảo nav-actions làm container relative */
+.nav-actions {
+  position: relative;
+}
+
+/* 2. Container notification: ngang, cố định cao, scroll nội dung */
+.month-notification {
+  display: flex;
+  position: absolute;
+  top: 70px;        /* điều chỉnh cho phù hợp header */
+  right: 0;
+  width: 260px;
+  max-height: 300px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-family: inherit;
+  z-index: 10;
+}
+
+/* 3. Menu chỗ nav link */
+.notes-nav {
+  flex: 0 0 80px;
+  display: flex;
+  flex-direction: column;
+  background: #f7f7f7;
+  border-right: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+}
+
+.notes-nav a {
+  padding: .5rem .75rem;
+  text-decoration: none;
+  color: #333;
+  font-size: .9rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.notes-nav a.active {
+  background: #007bff;
+  color: #fff;
+}
+
+/* 4. Nội dung scroll */
+.notes-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: .75rem;
+}
+
+.notes-content section + section {
+  margin-top: 1.5rem;
+}
+
+.notes-content h5 {
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+
+/* Ẩn mặc định, chỉ hiển thị khi có class .active */
+#monthNotification {
+  display: none;
+  position: absolute;
+  top: 70px;         /* điều chỉnh tuỳ header */
+  right: 0;
+  width: 260px;
+  max-height: 300px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Khi active thì thành flex container */
+#monthNotification.active {
+  display: flex;
+}
+
+/* Nav bên trái */
+.notes-nav {
+  flex: 0 0 80px;
+  display: flex;
+  flex-direction: column;
+  background: #f7f7f7;
+  border-right: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+}
+.notes-nav a {
+  padding: .5rem .75rem;
+  text-decoration: none;
+  color: #333;
+  font-size: .9rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+.notes-nav a.active {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Nội dung scroll */
+.notes-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: .75rem;
+}
+.notes-content section + section {
+  margin-top: 1.5rem;
+}
+.notes-content h5 {
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+
+/* Scrollbar tuỳ chỉnh */
+.notes-content::-webkit-scrollbar {
+  width: 6px;
+}
+.notes-content::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: rgba(0,0,0,0.2);
+}
+
+/* Ẩn mặc định, hiển thị khi có .active */
+#monthNotification {
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 0;
+  width: 300px;      /* tăng chút để container rộng đủ */
+  max-height: 350px; /* tăng nếu cần */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+/* Khi active: flex ngang, chia 2 cột */
+#monthNotification.active {
+  display: flex;
+  flex-direction: row;
+}
+
+/* cột nav cố định 80px */
+.notes-nav {
+  flex: 0 0 80px;
+  display: flex;
+  flex-direction: column;
+  background: #f7f7f7;
+  border-right: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  height: 100%;
+}
+
+/* cột nội dung chiếm phần còn lại */
+.notes-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: .75rem;
+}
+
 /* Thêm vào file dashboard-admin.css */
 
 /* Responsive Form Layout */
@@ -946,7 +1115,10 @@ body {
 #searchSoldier, 
 #soldierName, 
 #soldierEmail, 
-#soldierPassword {
+#soldierPassword,
+#soldierPhone,
+#soldierJob,
+#soldierAvatar {
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;

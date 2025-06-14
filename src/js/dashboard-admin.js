@@ -94,3 +94,20 @@ function renderCalendarGrid(date) {
     grid.appendChild(cell);
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('toggleCalendarBtn');
+  const grid = document.querySelector('.calendar-grid');
+
+  toggleBtn.addEventListener('click', () => {
+    // Toggle class hidden lên calendar-grid
+    grid.classList.toggle('hidden');
+
+    // Thay icon và text nút cho phù hợp
+    if (grid.classList.contains('hidden')) {
+      toggleBtn.innerHTML = '<i class="fas fa-eye"></i> Hiện lịch';
+    } else {
+      toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Ẩn lịch';
+    }
+  });
+});
