@@ -17,13 +17,14 @@
 
 ```
 project-root/
-├── user.html               # Giao diện người dùng
-├── user.css                # Giao diện & style cho người dùng
+├── index.html # Trang chính
 ├── src/
-│   ├── js/
-│   │   ├── user.js         # Logic người dùng (vote, load data)
-│   │   └── firebase-config.js  # Cấu hình Firebase
-├── README.md               # File hướng dẫn (bạn đang đọc)
+│ ├── js/
+│ │ ├── user.js # Logic người dùng (vote, load data)
+│ │ └── firebase-config.js # Cấu hình Firebase
+│ ├── css/
+│ │ └── user.css # Giao diện người dùng
+├── README.md # File hướng dẫn (bạn đang đọc)
 ```
 
 ---
@@ -55,7 +56,7 @@ export const app = initializeApp(firebaseConfig);
 ---
 
 ### 2. Chạy project
-- Mở file `user.html` bằng trình duyệt (hoặc triển khai trên Firebase Hosting / Vercel / Netlify).
+- Mở file `index.html` bằng trình duyệt (hoặc triển khai trên Firebase Hosting / Vercel / Netlify).
 - Đăng nhập bằng tài khoản đã có trong Firestore.
 - Thực hiện bình chọn lịch và xem bảng bình chọn của cả nhóm.
 
@@ -82,5 +83,4 @@ export const app = initializeApp(firebaseConfig);
 
 ## 📞 Liên hệ
 
-> Phát triển bởi nhóm bạn – 2025  
-> Mọi góp ý hoặc yêu cầu hỗ trợ, vui lòng liên hệ qua email hoặc tạo GitHub Issue nếu dự án được public.
+> Phát triển bởi Hoàng Tân Đại  - 0987010358
