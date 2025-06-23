@@ -370,6 +370,7 @@ tr:nth-child(even) {
   width: 100%;
   border-collapse: collapse;
   font-family: sans-serif;
+  table-layout: fixed;
 }
 
 /* Header */
@@ -383,6 +384,32 @@ tr:nth-child(even) {
   z-index: 1;
 }
 
+#allVotesTable thead th,
+#allVotesTable tbody td {
+  width: calc(100% / 7); /* chia đều cho 7 ngày trong tuần */
+  word-wrap: break-word;
+  text-align: center;
+  border-bottom: 2px solid #fff;
+}
+
+/* Danh sách trong mỗi ô được canh trái nhưng không tràn viền */
+#allVotesTable td ol {
+  padding-left: 1rem;
+  margin: 0;
+  text-align: left;
+}
+
+/* Căn giữa tiêu đề */
+#allVotesSection h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+#allVotesTable tbody tr td {
+  background-color: #fcfcfc;
+}
+
 /* Ô dữ liệu */
 #allVotesTable td {
   padding: 0.5rem;
@@ -392,10 +419,6 @@ tr:nth-child(even) {
 
 #allVotesTable td ul {
   list-style: none;
-}
-
-#allVotesTable td ol li{
-  text-align: left;
 }
 
 /* Dòng chẵn */

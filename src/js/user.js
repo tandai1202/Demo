@@ -164,6 +164,8 @@ function bindVoteSubmit() {
       await saveVote(weekId, selected);
       document.getElementById('voteStatus').textContent = 'Bình chọn đã được lưu!';
       document.getElementById('note').value = "";
+
+      await loadAllVotes();
     } catch (err) {
       console.error(err);
       alert('Lỗi khi lưu bình chọn.');
@@ -317,46 +319,37 @@ async function renderVoteForm() {
 async function loadAllVotes() {
   const weekId = getCurrentWeekId();
   const votesSnap = await getDocs(collection(db, 'weeks', weekId, 'votes'));
-  // Thêm cả id và createdAt
   const votes = votesSnap.docs.map(doc => ({
     id: doc.id,
     ...doc.data()
   }));
 
-  const daysOfWeek = ['mon','tue','wed','thu','fri','sat','sun'];
-  const dayNames   = {
+  const allowedDays = computeAllowedDays(weekId);
+  const dayNames = {
     mon:'Thứ 2', tue:'Thứ 3', wed:'Thứ 4',
     thu:'Thứ 5', fri:'Thứ 6', sat:'Thứ 7', sun:'Chủ nhật'
   };
-
-  // Xác định các ngày có vote
-  const activeDays = new Set();
-  votes.forEach(v => {
-    daysOfWeek.forEach(d => v.days[d] && activeDays.add(d));
-  });
-  const headerDays = daysOfWeek.filter(d => activeDays.has(d));
 
   // Render header
   const thead = document.querySelector('#allVotesTable thead');
   thead.innerHTML = '';
   const headRow = document.createElement('tr');
-  headerDays.forEach(d => {
+  allowedDays.forEach(d => {
     const th = document.createElement('th');
     th.textContent = dayNames[d];
     headRow.appendChild(th);
   });
   thead.appendChild(headRow);
 
-  // Render body: 1 hàng, mỗi ô <ol> theo createdAt
+  // Render body
   const tbody = document.querySelector('#allVotesTable tbody');
   tbody.innerHTML = '';
   const bodyRow = document.createElement('tr');
 
-  headerDays.forEach(d => {
-    // Lọc và sort theo timestamp tăng dần
+  allowedDays.forEach(d => {
     const voters = votes
       .filter(v => v.days[d])
-      .sort((a, b) => a.votedAt.seconds - b.votedAt.seconds);
+      .sort((a, b) => a.votedAt?.seconds - b.votedAt?.seconds);
 
     const td = document.createElement('td');
     if (voters.length) {
